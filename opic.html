@@ -8,60 +8,56 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: "Noto Sans KR", "Apple SD Gothic Neo", sans-serif; background: #f0f4ff; color: #1e1e2e; min-height: 100vh; }
 
-    /* 헤더 */
-    header { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 12px rgba(79,70,229,0.3); position: sticky; top: 0; z-index: 100; }
+    header { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 12px rgba(79,70,229,0.3); position: sticky; top: 0; z-index: 100; flex-wrap: wrap; gap: 12px; }
     .logo { display: flex; align-items: center; gap: 12px; }
     .logo-icon { font-size: 28px; }
-    .logo h1 { font-size: 1.4rem; font-weight: 800; }
+    .logo h1 { font-size: 1.3rem; font-weight: 800; }
     .logo span { font-size: 0.75rem; opacity: 0.8; display: block; }
     .api-key-area { display: flex; gap: 8px; align-items: center; }
-    .api-key-area input { padding: 8px 14px; border-radius: 8px; border: none; font-size: 0.82rem; width: 260px; outline: none; background: rgba(255,255,255,0.15); color: white; }
+    .api-key-area input { padding: 8px 14px; border-radius: 8px; border: none; font-size: 0.82rem; width: 220px; outline: none; background: rgba(255,255,255,0.15); color: white; }
     .api-key-area input::placeholder { color: rgba(255,255,255,0.6); }
     .api-key-area button { padding: 8px 16px; border-radius: 8px; border: none; background: white; color: #4f46e5; font-weight: 700; cursor: pointer; font-size: 0.82rem; }
 
-    /* 탭 */
-    .tabs { display: flex; gap: 0; background: white; border-bottom: 2px solid #e5e7eb; padding: 0 32px; overflow-x: auto; }
-    .tab-btn { padding: 16px 24px; border: none; background: transparent; color: #6b7280; cursor: pointer; font-size: 0.92rem; font-weight: 600; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.2s; white-space: nowrap; }
+    .tabs { display: flex; gap: 0; background: white; border-bottom: 2px solid #e5e7eb; padding: 0 24px; overflow-x: auto; }
+    .tab-btn { padding: 14px 18px; border: none; background: transparent; color: #6b7280; cursor: pointer; font-size: 0.88rem; font-weight: 600; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.2s; white-space: nowrap; }
     .tab-btn:hover { color: #4f46e5; background: #f5f3ff; }
     .tab-btn.active { color: #4f46e5; border-bottom-color: #4f46e5; }
 
-    /* 컨테이너 */
-    .page { display: none; padding: 32px; max-width: 1000px; margin: 0 auto; }
+    .page { display: none; padding: 24px; max-width: 900px; margin: 0 auto; }
     .page.active { display: block; }
 
-    /* 공통 카드 */
-    .card { background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 24px; }
-    .card h2 { font-size: 1.15rem; font-weight: 800; color: #1e1e2e; margin-bottom: 6px; }
+    .card { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 20px; }
+    .card h2 { font-size: 1.1rem; font-weight: 800; color: #1e1e2e; margin-bottom: 6px; }
     .card .desc { font-size: 0.85rem; color: #6b7280; margin-bottom: 20px; }
 
-    /* 버튼 */
-    .btn-primary { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; border: none; padding: 12px 24px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 0.92rem; transition: opacity 0.2s; }
+    .btn-primary { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; border: none; padding: 14px 28px; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 0.95rem; transition: opacity 0.2s; width: 100%; }
     .btn-primary:hover { opacity: 0.88; }
     .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-    .btn-secondary { background: #f3f4f6; color: #374151; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.88rem; transition: background 0.2s; }
+    .btn-secondary { background: #f3f4f6; color: #374151; border: none; padding: 12px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.88rem; transition: background 0.2s; }
     .btn-secondary:hover { background: #e5e7eb; }
+    .btn-danger { background: #fee2e2; color: #dc2626; border: none; padding: 12px 20px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 0.88rem; }
+    .btn-success { background: #d1fae5; color: #065f46; border: none; padding: 12px 20px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 0.88rem; }
 
-    /* 셀렉트, 텍스트에어리어 */
     select, textarea { width: 100%; padding: 12px 16px; border-radius: 10px; border: 1.5px solid #e5e7eb; font-size: 0.92rem; outline: none; font-family: inherit; transition: border-color 0.2s; }
     select:focus, textarea:focus { border-color: #4f46e5; }
     textarea { resize: vertical; min-height: 120px; }
 
-    /* 결과 박스 */
     .result-box { background: #f5f3ff; border: 1.5px solid #ddd6fe; border-radius: 12px; padding: 20px; margin-top: 16px; font-size: 0.92rem; line-height: 1.8; color: #2d2d4e; white-space: pre-wrap; }
     .result-box.feedback { background: #f0fdf4; border-color: #bbf7d0; color: #14532d; }
     .result-box.error { background: #fef2f2; border-color: #fecaca; color: #991b1b; }
 
-    /* 로딩 */
-    .loading { display: inline-block; width: 18px; height: 18px; border: 3px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 8px; }
+    .loading { display: inline-block; width: 16px; height: 16px; border: 3px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 8px; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* 1번 - 스크립트 생성기 */
-    .topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-bottom: 20px; }
-    .topic-chip { padding: 10px 14px; border-radius: 10px; border: 2px solid #e5e7eb; background: white; cursor: pointer; font-size: 0.85rem; font-weight: 600; text-align: center; transition: all 0.2s; color: #374151; }
+    /* 주제 선택 */
+    .topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; margin-bottom: 20px; }
+    .topic-chip { padding: 10px 12px; border-radius: 10px; border: 2px solid #e5e7eb; background: white; cursor: pointer; font-size: 0.85rem; font-weight: 600; text-align: center; transition: all 0.2s; color: #374151; }
     .topic-chip:hover { border-color: #4f46e5; color: #4f46e5; background: #f5f3ff; }
     .topic-chip.selected { border-color: #4f46e5; background: #4f46e5; color: white; }
-    .level-btns { display: flex; gap: 10px; margin-bottom: 20px; }
-    .level-btn { padding: 8px 20px; border-radius: 8px; border: 2px solid #e5e7eb; background: white; cursor: pointer; font-weight: 700; font-size: 0.85rem; transition: all 0.2s; }
+
+    /* 난이도 */
+    .level-btns { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    .level-btn { padding: 10px 22px; border-radius: 8px; border: 2px solid #e5e7eb; background: white; cursor: pointer; font-weight: 700; font-size: 0.85rem; transition: all 0.2s; flex: 1; }
     .level-btn.IM { border-color: #86efac; color: #166534; }
     .level-btn.IH { border-color: #fde68a; color: #92400e; }
     .level-btn.AL { border-color: #c4b5fd; color: #4c1d95; }
@@ -69,34 +65,53 @@
     .level-btn.selected.IH { background: #fde68a; }
     .level-btn.selected.AL { background: #c4b5fd; }
 
-    /* 2번 - 첨삭 */
-    .feedback-section { margin-top: 16px; }
+    /* 실전 말하기 탭 */
+    .practice-step { display: none; }
+    .practice-step.active { display: block; }
 
-    /* 3번 - 타이머 */
-    .timer-display { font-size: 4rem; font-weight: 900; color: #4f46e5; text-align: center; padding: 20px 0; font-variant-numeric: tabular-nums; }
-    .timer-display.warning { color: #ef4444; animation: pulse 1s infinite; }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-    .question-box { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; border-radius: 14px; padding: 24px 28px; text-align: center; font-size: 1.1rem; font-weight: 700; line-height: 1.6; margin-bottom: 20px; min-height: 80px; display: flex; align-items: center; justify-content: center; }
-    .timer-controls { display: flex; gap: 12px; justify-content: center; margin-bottom: 20px; }
+    .step-indicator { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+    .step-dot { width: 32px; height: 32px; border-radius: 50%; border: 2px solid #e5e7eb; background: white; color: #9ca3af; font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; }
+    .step-dot.active { background: #4f46e5; border-color: #4f46e5; color: white; }
+    .step-dot.done { background: #10b981; border-color: #10b981; color: white; }
+    .step-line { width: 30px; height: 2px; background: #e5e7eb; }
+    .step-line.done { background: #10b981; }
 
-    /* 4번 - 표현 사전 */
-    .expr-category { margin-bottom: 28px; }
-    .expr-category h3 { font-size: 1rem; font-weight: 800; color: #4f46e5; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #e0e7ff; }
-    .expr-list { display: flex; flex-direction: column; gap: 8px; }
-    .expr-item { background: #f9fafb; border-radius: 10px; padding: 14px 18px; border-left: 4px solid #4f46e5; }
-    .expr-item .en { font-weight: 700; color: #1e1e2e; font-size: 0.95rem; }
-    .expr-item .ko { font-size: 0.82rem; color: #6b7280; margin-top: 3px; }
-    .expr-item .example { font-size: 0.82rem; color: #4f46e5; margin-top: 4px; font-style: italic; }
+    .question-display { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; border-radius: 16px; padding: 28px 24px; text-align: center; font-size: 1.1rem; font-weight: 700; line-height: 1.7; margin-bottom: 20px; min-height: 100px; display: flex; align-items: center; justify-content: center; }
 
-    /* API 키 안내 */
-    .api-notice { background: #fffbeb; border: 1.5px solid #fde68a; border-radius: 12px; padding: 16px 20px; margin-bottom: 24px; font-size: 0.88rem; color: #92400e; display: none; }
+    .timer-big { font-size: 5rem; font-weight: 900; color: #4f46e5; text-align: center; padding: 12px 0; font-variant-numeric: tabular-nums; line-height: 1; }
+    .timer-big.warning { color: #ef4444; animation: pulse 1s infinite; }
+    .timer-label { text-align: center; font-size: 0.88rem; color: #6b7280; margin-bottom: 16px; font-weight: 600; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    .record-btn { width: 80px; height: 80px; border-radius: 50%; border: none; font-size: 2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; transition: all 0.2s; }
+    .record-btn.idle { background: #fee2e2; color: #dc2626; box-shadow: 0 4px 12px rgba(220,38,38,0.3); }
+    .record-btn.recording { background: #dc2626; color: white; box-shadow: 0 0 0 8px rgba(220,38,38,0.2); animation: recordPulse 1.5s infinite; }
+    @keyframes recordPulse { 0%,100%{box-shadow:0 0 0 8px rgba(220,38,38,0.2)} 50%{box-shadow:0 0 0 16px rgba(220,38,38,0.05)} }
+
+    .transcript-box { background: #f9fafb; border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 16px; min-height: 80px; font-size: 0.92rem; line-height: 1.7; color: #374151; margin-bottom: 16px; }
+
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn-row > * { flex: 1; min-width: 120px; }
+
+    .api-notice { background: #fffbeb; border: 1.5px solid #fde68a; border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; font-size: 0.88rem; color: #92400e; display: none; }
     .api-notice.show { display: block; }
 
-    @media(max-width: 768px) {
-      header { flex-direction: column; gap: 12px; padding: 16px; }
-      .api-key-area input { width: 200px; }
-      .page { padding: 16px; }
-      .tabs { padding: 0 8px; }
+    /* 표현 사전 */
+    .expr-category { margin-bottom: 24px; }
+    .expr-category h3 { font-size: 1rem; font-weight: 800; color: #4f46e5; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid #e0e7ff; }
+    .expr-item { background: #f9fafb; border-radius: 10px; padding: 12px 16px; border-left: 4px solid #4f46e5; margin-bottom: 8px; }
+    .expr-item .en { font-weight: 700; color: #1e1e2e; font-size: 0.92rem; }
+    .expr-item .ko { font-size: 0.8rem; color: #6b7280; margin-top: 2px; }
+    .expr-item .example { font-size: 0.8rem; color: #4f46e5; margin-top: 4px; font-style: italic; }
+
+    @media(max-width: 640px) {
+      header { padding: 14px 16px; }
+      .api-key-area input { width: 160px; }
+      .page { padding: 14px; }
+      .tabs { padding: 0 4px; }
+      .tab-btn { padding: 12px 10px; font-size: 0.8rem; }
+      .timer-big { font-size: 4rem; }
+      .question-display { font-size: 1rem; padding: 20px 16px; }
     }
   </style>
 </head>
@@ -107,7 +122,7 @@
     <div class="logo-icon">🎙️</div>
     <div>
       <h1>OPIc 영어회화 트레이너</h1>
-      <span>스크립트 생성 · 첨삭 · 실전 타이머 · 표현 사전</span>
+      <span>스크립트 생성 · 실전 말하기 · 첨삭 · 표현 사전</span>
     </div>
   </div>
   <div class="api-key-area">
@@ -118,8 +133,8 @@
 
 <div class="tabs">
   <button class="tab-btn active" onclick="showPage('script', this)">📝 스크립트 생성</button>
+  <button class="tab-btn" onclick="showPage('practice', this)">🎙️ 실전 말하기</button>
   <button class="tab-btn" onclick="showPage('feedback', this)">✏️ 내 답변 첨삭</button>
-  <button class="tab-btn" onclick="showPage('timer', this)">⏱️ 실전 타이머</button>
   <button class="tab-btn" onclick="showPage('expressions', this)">📚 표현 사전</button>
 </div>
 
@@ -145,53 +160,112 @@
   </div>
 </div>
 
-<!-- ===== 2. 첨삭 ===== -->
+<!-- ===== 2. 실전 말하기 ===== -->
+<div id="page-practice" class="page">
+  <div class="api-notice" id="notice-practice">⚠️ 상단에 Gemini API Key를 입력하고 저장 버튼을 눌러주세요.</div>
+
+  <!-- Step 표시 -->
+  <div class="step-indicator">
+    <div class="step-dot active" id="sdot1">1</div>
+    <div class="step-line" id="sline1"></div>
+    <div class="step-dot" id="sdot2">2</div>
+    <div class="step-line" id="sline2"></div>
+    <div class="step-dot" id="sdot3">3</div>
+    <div class="step-line" id="sline3"></div>
+    <div class="step-dot" id="sdot4">4</div>
+  </div>
+
+  <!-- Step 1: 주제 선택 -->
+  <div id="pstep1" class="practice-step active">
+    <div class="card">
+      <h2>① 주제를 선택하세요</h2>
+      <p class="desc">선택한 주제에 맞는 오픽 질문이 랜덤으로 출제됩니다.</p>
+      <div class="topic-grid" id="practiceTopicGrid"></div>
+    </div>
+  </div>
+
+  <!-- Step 2: 질문 확인 -->
+  <div id="pstep2" class="practice-step">
+    <div class="card">
+      <h2>② 질문을 확인하세요</h2>
+      <p class="desc">질문을 잘 읽고, 다시 듣고 싶으면 🔊 버튼을 누르세요. 준비되면 타이머를 시작하세요!</p>
+      <div class="question-display" id="practiceQuestion">질문이 여기에 표시됩니다.</div>
+      <div class="btn-row">
+        <button class="btn-secondary" onclick="speakQuestion()">🔊 다시 듣기</button>
+        <button class="btn-secondary" onclick="drawNewQuestion()">🎲 다른 질문</button>
+        <button class="btn-primary" style="flex:2" onclick="goToStep3()">▶ 준비됐어요! 타이머 시작</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3: 타이머 + 녹음 -->
+  <div id="pstep3" class="practice-step">
+    <div class="card">
+      <h2>③ 말하면서 녹음하세요</h2>
+      <div class="question-display" id="practiceQuestion2" style="font-size:0.95rem;min-height:60px;margin-bottom:16px;padding:16px;"></div>
+
+      <div class="timer-label" id="timerLabel">답변 시간</div>
+      <div class="timer-big" id="practiceTimer">2:00</div>
+
+      <div style="text-align:center;margin-bottom:20px;">
+        <button class="record-btn idle" id="recordBtn" onclick="toggleRecording()">🎤</button>
+        <div style="font-size:0.82rem;color:#6b7280;" id="recordStatus">버튼을 눌러 녹음 시작</div>
+      </div>
+
+      <div style="font-weight:700;font-size:0.88rem;margin-bottom:8px;color:#374151;">📝 인식된 텍스트</div>
+      <div class="transcript-box" id="transcriptBox">녹음하면 여기에 텍스트가 자동으로 표시됩니다...</div>
+
+      <div class="btn-row">
+        <button class="btn-secondary" onclick="speakQuestion2()">🔊 질문 다시 듣기</button>
+        <button class="btn-danger" onclick="resetPractice()">↺ 처음부터</button>
+        <button class="btn-primary" style="flex:2" id="evalBtn" onclick="goToStep4()" disabled>🔍 AI 평가 받기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 4: AI 평가 -->
+  <div id="pstep4" class="practice-step">
+    <div class="card">
+      <h2>④ AI 평가 결과</h2>
+      <p class="desc">내 답변에 대한 오픽 전문 피드백입니다.</p>
+
+      <div style="background:#f0f9ff;border:1.5px solid #bae6fd;border-radius:12px;padding:16px;margin-bottom:16px;">
+        <div style="font-size:0.8rem;color:#0369a1;font-weight:700;margin-bottom:6px;">📌 질문</div>
+        <div style="font-size:0.92rem;color:#1e40af;font-weight:600;" id="evalQuestion"></div>
+      </div>
+
+      <div style="background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:12px;padding:16px;margin-bottom:16px;">
+        <div style="font-size:0.8rem;color:#6b7280;font-weight:700;margin-bottom:6px;">🗣️ 내 답변 (인식된 텍스트)</div>
+        <div style="font-size:0.88rem;color:#374151;line-height:1.7;" id="evalTranscript"></div>
+      </div>
+
+      <div id="evalResult"></div>
+
+      <div class="btn-row" style="margin-top:16px;">
+        <button class="btn-secondary" onclick="resetPractice()">🔄 다시 연습하기</button>
+        <button class="btn-primary" onclick="showPage('script', document.querySelectorAll(\'.tab-btn\')[0])">📝 스크립트 보기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 3. 첨삭 ===== -->
 <div id="page-feedback" class="page">
   <div class="api-notice" id="notice-feedback">⚠️ 상단에 Gemini API Key를 입력하고 저장 버튼을 눌러주세요.</div>
   <div class="card">
     <h2>✏️ 내 답변 첨삭 받기</h2>
     <p class="desc">내가 쓴 영어 답변을 붙여넣으면 AI가 문법, 표현, 오픽 스타일로 피드백을 드립니다.</p>
 
-    <p style="font-weight:700;margin-bottom:10px;font-size:0.9rem;">① 오픽 주제 (선택사항)</p>
-    <input type="text" id="feedbackTopic" placeholder="예: 자기소개, 여행 경험, 좋아하는 영화..." style="width:100%;padding:12px 16px;border-radius:10px;border:1.5px solid #e5e7eb;font-size:0.92rem;margin-bottom:16px;outline:none;font-family:inherit;"/>
+    <p style="font-weight:700;margin-bottom:8px;font-size:0.9rem;">① 오픽 주제 (선택사항)</p>
+    <input type="text" id="feedbackTopic" placeholder="예: 자기소개, 여행 경험..." style="width:100%;padding:12px 16px;border-radius:10px;border:1.5px solid #e5e7eb;font-size:0.92rem;margin-bottom:16px;outline:none;font-family:inherit;"/>
 
-    <p style="font-weight:700;margin-bottom:10px;font-size:0.9rem;">② 내 답변 입력</p>
+    <p style="font-weight:700;margin-bottom:8px;font-size:0.9rem;">② 내 답변 입력</p>
     <textarea id="myAnswer" placeholder="여기에 영어로 작성한 답변을 붙여넣으세요..." rows="6"></textarea>
 
     <div style="margin-top:16px;">
       <button class="btn-primary" id="feedbackBtn" onclick="getFeedback()">🔍 첨삭 받기</button>
     </div>
     <div id="feedbackResult"></div>
-  </div>
-</div>
-
-<!-- ===== 3. 실전 타이머 ===== -->
-<div id="page-timer" class="page">
-  <div class="card">
-    <h2>⏱️ 실전 모의 타이머</h2>
-    <p class="desc">랜덤 질문이 나오면 준비 시간 후 답변 시간 동안 말하는 연습을 합니다.</p>
-
-    <div class="question-box" id="questionBox">
-      🎲 아래 버튼을 눌러 질문을 뽑아보세요!
-    </div>
-
-    <div class="timer-display" id="timerDisplay">2:00</div>
-
-    <div class="timer-controls">
-      <button class="btn-secondary" onclick="drawQuestion()">🎲 질문 뽑기</button>
-      <button class="btn-primary" id="startBtn" onclick="startTimer()">▶ 시작</button>
-      <button class="btn-secondary" onclick="resetTimer()">↺ 리셋</button>
-    </div>
-
-    <div style="text-align:center;font-size:0.85rem;color:#6b7280;">
-      준비시간 30초 → 답변시간 2분 (오픽 실전과 동일)
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>🎯 카테고리별 질문 뱅크</h2>
-    <p class="desc">클릭하면 해당 질문으로 타이머를 설정합니다.</p>
-    <div id="questionBank"></div>
   </div>
 </div>
 
@@ -217,32 +291,83 @@ const QUESTIONS = {
   "자기소개": [
     "Tell me about yourself. Where do you live and what do you do?",
     "Describe your daily routine in detail.",
-    "Tell me about your family and home life."
+    "Tell me about your family and home life.",
+    "What do you do in your free time?"
   ],
-  "여행": [
+  "집 묘사": [
+    "Describe your home. What does it look like?",
+    "Tell me about your favorite room in your home and why you like it.",
+    "What do you usually do at home on weekends?"
+  ],
+  "여행 경험": [
     "Tell me about a memorable trip you have taken.",
     "Where would you like to travel and why?",
-    "Describe a problem you experienced while traveling."
+    "Describe a problem you experienced while traveling.",
+    "Tell me about your most recent trip."
   ],
-  "영화": [
+  "좋아하는 영화": [
     "Tell me about your favorite movie and why you like it.",
     "Describe the last movie you watched.",
-    "What kind of movies do you enjoy and why?"
+    "What kind of movies do you enjoy and why?",
+    "Tell me about a movie that had a big impact on you."
   ],
-  "운동": [
+  "운동/스포츠": [
     "Tell me about a sport or exercise you enjoy.",
     "Describe a time when you played sports with others.",
-    "How has exercise changed your life?"
+    "How has exercise changed your life?",
+    "What sport or physical activity do you do regularly?"
   ],
-  "음악": [
+  "음악 감상": [
     "What kind of music do you like and why?",
     "Tell me about a memorable concert or performance you attended.",
-    "How does music affect your mood?"
+    "How does music affect your mood?",
+    "Who is your favorite singer or band?"
   ],
-  "직장/학교": [
+  "쇼핑 경험": [
+    "Where do you usually go shopping and what do you buy?",
+    "Tell me about a memorable shopping experience.",
+    "Do you prefer online or in-store shopping? Why?"
+  ],
+  "외식 경험": [
+    "Tell me about your favorite restaurant.",
+    "Describe a memorable dining experience.",
+    "What kind of food do you enjoy eating out?"
+  ],
+  "공원/산책": [
+    "Describe a park or outdoor place you like to visit.",
+    "Tell me about a walk or hike you have taken recently.",
+    "What do you usually do when you go to a park?"
+  ],
+  "직장 생활": [
     "Describe your workplace or school.",
     "Tell me about a challenging project you worked on.",
-    "What do you enjoy most about your work or studies?"
+    "What do you enjoy most about your work or studies?",
+    "Describe a typical day at work."
+  ],
+  "주말 활동": [
+    "What do you usually do on weekends?",
+    "Tell me about your most recent weekend.",
+    "How do you like to relax on your days off?"
+  ],
+  "친구와의 추억": [
+    "Tell me about your best friend.",
+    "Describe a memorable experience you had with a friend.",
+    "What do you usually do when you hang out with friends?"
+  ],
+  "명절/기념일": [
+    "Tell me about a holiday or celebration you enjoy.",
+    "Describe how you celebrate your favorite holiday.",
+    "What is your favorite memory from a holiday?"
+  ],
+  "최근 본 공연": [
+    "Tell me about the last performance or show you attended.",
+    "Describe your favorite type of performance.",
+    "Have you ever been to a concert or theater? Tell me about it."
+  ],
+  "국내 여행": [
+    "Tell me about a place in your country that you have visited.",
+    "Where in your country would you recommend visiting?",
+    "Describe a domestic trip you have taken recently."
   ]
 };
 
@@ -304,14 +429,14 @@ function saveApiKey() {
     apiKey = input;
     localStorage.setItem("gemini_api_key", apiKey);
     document.getElementById("apiKeyInput").value = "";
+    document.getElementById("apiKeyInput").placeholder = "API Key 저장됨 ✓";
     alert("✅ API Key가 저장되었습니다!");
     checkApiKey();
   }
 }
 
 function checkApiKey() {
-  const notices = document.querySelectorAll(".api-notice");
-  notices.forEach(n => n.classList.toggle("show", !apiKey));
+  document.querySelectorAll(".api-notice").forEach(n => n.classList.toggle("show", !apiKey));
 }
 
 // ===== 탭 =====
@@ -319,13 +444,13 @@ function showPage(name, btn) {
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
   document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
   document.getElementById("page-" + name).classList.add("active");
-  btn.classList.add("active");
+  if (btn) btn.classList.add("active");
   checkApiKey();
 }
 
-// ===== Gemini API 호출 =====
+// ===== Gemini API =====
 async function callGemini(prompt) {
-  if (!apiKey) throw new Error("API Key가 없습니다.");
+  if (!apiKey) throw new Error("API Key가 없습니다. 상단에 입력해주세요.");
   const res = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`,
     {
@@ -336,25 +461,29 @@ async function callGemini(prompt) {
   );
   const data = await res.json();
   if (!res.ok) throw new Error(data.error?.message || "API 오류");
-  return data.candidates[0].contents.parts[0].text;
+  return data.candidates[0].content.parts[0].text;
 }
 
 // ===== 1. 스크립트 생성 =====
 let selectedTopic = "";
 let selectedLevel = "IH";
 
-const topicGrid = document.getElementById("topicGrid");
-TOPICS.forEach(t => {
-  const btn = document.createElement("button");
-  btn.className = "topic-chip";
-  btn.textContent = t;
-  btn.onclick = () => {
-    document.querySelectorAll(".topic-chip").forEach(c => c.classList.remove("selected"));
-    btn.classList.add("selected");
-    selectedTopic = t;
-  };
-  topicGrid.appendChild(btn);
-});
+function buildTopicGrid(containerId, onSelect) {
+  const grid = document.getElementById(containerId);
+  TOPICS.forEach(t => {
+    const btn = document.createElement("button");
+    btn.className = "topic-chip";
+    btn.textContent = t;
+    btn.onclick = () => {
+      grid.querySelectorAll(".topic-chip").forEach(c => c.classList.remove("selected"));
+      btn.classList.add("selected");
+      onSelect(t);
+    };
+    grid.appendChild(btn);
+  });
+}
+
+buildTopicGrid("topicGrid", t => { selectedTopic = t; });
 
 function selectLevel(level, btn) {
   document.querySelectorAll(".level-btn").forEach(b => b.classList.remove("selected"));
@@ -363,207 +492,28 @@ function selectLevel(level, btn) {
 }
 
 async function generateScript() {
-  if (!apiKey) { showNotice("notice-script"); return; }
+  if (!apiKey) { checkApiKey(); return; }
   if (!selectedTopic) { alert("주제를 선택해주세요!"); return; }
-
   const btn = document.getElementById("generateBtn");
   const result = document.getElementById("scriptResult");
   btn.disabled = true;
   btn.innerHTML = '<span class="loading"></span>생성 중...';
   result.innerHTML = "";
-
   const levelDesc = { IM: "중급 (IM): 간단한 문장 위주, 기본 어휘", IH: "중고급 (IH): 다양한 문장 구조, 자연스러운 표현", AL: "고급 (AL): 복잡한 문장, 고급 어휘, 원어민 수준" };
-
-  const prompt = `You are an OPIc English speaking coach. Generate a sample OPIc answer script for the following topic and level.
-
+  const prompt = `You are an OPIc English speaking coach. Generate a sample OPIc answer script.
 Topic: ${selectedTopic}
 Level: ${levelDesc[selectedLevel]}
-
 Requirements:
-- Write in natural spoken English (not too formal)
-- Length: about 8-12 sentences
-- Include level-appropriate vocabulary and expressions
-- Add a Korean translation below each paragraph
-- Format: [English paragraph] then [Korean translation]
-- Start with a natural opening sentence
-
-Please write the script now:`;
-
+- Natural spoken English (not too formal)
+- Length: 8-12 sentences
+- Add Korean translation below each paragraph
+- Format: [English] then [Korean translation]
+- Natural opening sentence`;
   try {
     const text = await callGemini(prompt);
     result.innerHTML = `<div class="result-box">${escapeHtml(text)}</div>`;
-  } catch (e) {
+  } catch(e) {
     result.innerHTML = `<div class="result-box error">❌ 오류: ${e.message}</div>`;
   }
-
   btn.disabled = false;
-  btn.innerHTML = "✨ 스크립트 생성하기";
-}
-
-// ===== 2. 첨삭 =====
-async function getFeedback() {
-  if (!apiKey) { showNotice("notice-feedback"); return; }
-  const answer = document.getElementById("myAnswer").value.trim();
-  if (!answer) { alert("답변을 입력해주세요!"); return; }
-
-  const topic = document.getElementById("feedbackTopic").value.trim();
-  const btn = document.getElementById("feedbackBtn");
-  const result = document.getElementById("feedbackResult");
-
-  btn.disabled = true;
-  btn.innerHTML = '<span class="loading"></span>분석 중...';
-  result.innerHTML = "";
-
-  const prompt = `You are an OPIc English speaking coach. Please give detailed feedback on the following student answer.
-${topic ? `Topic: ${topic}` : ""}
-
-Student's answer:
-"${answer}"
-
-Please provide feedback in Korean with the following structure:
-1. 전체 평가 (Overall Assessment) - 현재 레벨 추정 및 전반적인 평가
-2. 잘한 점 (Strengths) - 좋은 표현이나 구조
-3. 개선할 점 (Areas to Improve) - 문법 오류, 어색한 표현 등
-4. 더 나은 표현 제안 (Better Expressions) - 고급 표현으로 바꿔쓰기 예시
-5. 수정된 답변 (Revised Answer) - 전체를 IH~AL 수준으로 수정한 버전`;
-
-  try {
-    const text = await callGemini(prompt);
-    result.innerHTML = `<div class="result-box feedback">${escapeHtml(text)}</div>`;
-  } catch (e) {
-    result.innerHTML = `<div class="result-box error">❌ 오류: ${e.message}</div>`;
-  }
-
-  btn.disabled = false;
-  btn.innerHTML = "🔍 첨삭 받기";
-}
-
-// ===== 3. 타이머 =====
-let timerInterval = null;
-let timerSeconds = 120;
-let isPrep = false;
-
-const allQuestions = Object.values(QUESTIONS).flat();
-
-function drawQuestion() {
-  const q = allQuestions[Math.floor(Math.random() * allQuestions.length)];
-  document.getElementById("questionBox").textContent = "❓ " + q;
-  resetTimer();
-}
-
-function startTimer() {
-  if (timerInterval) return;
-  const btn = document.getElementById("startBtn");
-
-  // 준비 시간 30초
-  if (!isPrep) {
-    isPrep = true;
-    timerSeconds = 30;
-    btn.textContent = "⏳ 준비 중...";
-    btn.disabled = true;
-    document.getElementById("timerDisplay").style.color = "#f59e0b";
-  }
-
-  timerInterval = setInterval(() => {
-    timerSeconds--;
-    updateTimerDisplay();
-
-    if (timerSeconds <= 0) {
-      clearInterval(timerInterval);
-      timerInterval = null;
-
-      if (isPrep) {
-        isPrep = false;
-        timerSeconds = 120;
-        btn.textContent = "▶ 답변 시작!";
-        btn.disabled = false;
-        document.getElementById("timerDisplay").style.color = "#4f46e5";
-        alert("🎙️ 준비 완료! 지금 말하세요!");
-        startTimer();
-      } else {
-        document.getElementById("timerDisplay").textContent = "종료!";
-        document.getElementById("timerDisplay").style.color = "#ef4444";
-        btn.textContent = "▶ 시작";
-        btn.disabled = false;
-        alert("⏰ 시간 종료!");
-      }
-    }
-
-    if (!isPrep && timerSeconds <= 20) {
-      document.getElementById("timerDisplay").classList.add("warning");
-    }
-  }, 1000);
-}
-
-function resetTimer() {
-  clearInterval(timerInterval);
-  timerInterval = null;
-  isPrep = false;
-  timerSeconds = 120;
-  document.getElementById("timerDisplay").textContent = "2:00";
-  document.getElementById("timerDisplay").className = "timer-display";
-  document.getElementById("timerDisplay").style.color = "#4f46e5";
-  document.getElementById("startBtn").textContent = "▶ 시작";
-  document.getElementById("startBtn").disabled = false;
-}
-
-function updateTimerDisplay() {
-  const m = Math.floor(timerSeconds / 60);
-  const s = timerSeconds % 60;
-  document.getElementById("timerDisplay").textContent = `${m}:${s.toString().padStart(2, "0")}`;
-}
-
-// 질문 뱅크 렌더링
-const qBank = document.getElementById("questionBank");
-Object.entries(QUESTIONS).forEach(([cat, qs]) => {
-  const section = document.createElement("div");
-  section.style.marginBottom = "16px";
-  section.innerHTML = `<p style="font-weight:700;color:#4f46e5;margin-bottom:8px;">📌 ${cat}</p>`;
-  qs.forEach(q => {
-    const btn = document.createElement("button");
-    btn.className = "btn-secondary";
-    btn.style.cssText = "width:100%;text-align:left;margin-bottom:6px;font-size:0.85rem;";
-    btn.textContent = q;
-    btn.onclick = () => {
-      document.getElementById("questionBox").textContent = "❓ " + q;
-      resetTimer();
-    };
-    section.appendChild(btn);
-  });
-  qBank.appendChild(section);
-});
-
-// ===== 4. 표현 사전 =====
-const exprContent = document.getElementById("exprContent");
-EXPRESSIONS.forEach(cat => {
-  const div = document.createElement("div");
-  div.className = "expr-category";
-  div.innerHTML = `<h3>${cat.category}</h3><div class="expr-list">${
-    cat.items.map(item => `
-      <div class="expr-item">
-        <div class="en">${item.en}</div>
-        <div class="ko">${item.ko}</div>
-        <div class="example">"${item.example}"</div>
-      </div>
-    `).join("")
-  }</div>`;
-  exprContent.appendChild(div);
-});
-
-// ===== 유틸 =====
-function escapeHtml(text) {
-  return text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g,"<br/>");
-}
-
-function showNotice(id) {
-  document.getElementById(id).classList.add("show");
-}
-
-// 초기화
-if (apiKey) {
-  document.getElementById("apiKeyInput").placeholder = "API Key 저장됨 ✓";
-}
-checkApiKey();
-</script>
-</body>
-</html>
+  btn.innerHTML = "✨ 스크립트 생성
