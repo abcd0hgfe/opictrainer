@@ -7,7 +7,6 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: "Noto Sans KR", "Apple SD Gothic Neo", sans-serif; background: #f0f4ff; color: #1e1e2e; min-height: 100vh; }
-
     header { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 12px rgba(79,70,229,0.3); position: sticky; top: 0; z-index: 100; flex-wrap: wrap; gap: 12px; }
     .logo { display: flex; align-items: center; gap: 12px; }
     .logo-icon { font-size: 28px; }
@@ -17,45 +16,33 @@
     .api-key-area input { padding: 8px 14px; border-radius: 8px; border: none; font-size: 0.82rem; width: 220px; outline: none; background: rgba(255,255,255,0.15); color: white; }
     .api-key-area input::placeholder { color: rgba(255,255,255,0.6); }
     .api-key-area button { padding: 8px 16px; border-radius: 8px; border: none; background: white; color: #4f46e5; font-weight: 700; cursor: pointer; font-size: 0.82rem; }
-
-    .tabs { display: flex; gap: 0; background: white; border-bottom: 2px solid #e5e7eb; padding: 0 24px; overflow-x: auto; }
+    .tabs { display: flex; background: white; border-bottom: 2px solid #e5e7eb; padding: 0 24px; overflow-x: auto; }
     .tab-btn { padding: 14px 18px; border: none; background: transparent; color: #6b7280; cursor: pointer; font-size: 0.88rem; font-weight: 600; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.2s; white-space: nowrap; }
     .tab-btn:hover { color: #4f46e5; background: #f5f3ff; }
     .tab-btn.active { color: #4f46e5; border-bottom-color: #4f46e5; }
-
     .page { display: none; padding: 24px; max-width: 900px; margin: 0 auto; }
     .page.active { display: block; }
-
     .card { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 20px; }
-    .card h2 { font-size: 1.1rem; font-weight: 800; color: #1e1e2e; margin-bottom: 6px; }
+    .card h2 { font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; }
     .card .desc { font-size: 0.85rem; color: #6b7280; margin-bottom: 20px; }
-
     .btn-primary { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; border: none; padding: 14px 28px; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 0.95rem; transition: opacity 0.2s; width: 100%; }
     .btn-primary:hover { opacity: 0.88; }
     .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
     .btn-secondary { background: #f3f4f6; color: #374151; border: none; padding: 12px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.88rem; transition: background 0.2s; }
     .btn-secondary:hover { background: #e5e7eb; }
     .btn-danger { background: #fee2e2; color: #dc2626; border: none; padding: 12px 20px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 0.88rem; }
-    .btn-success { background: #d1fae5; color: #065f46; border: none; padding: 12px 20px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 0.88rem; }
-
-    select, textarea { width: 100%; padding: 12px 16px; border-radius: 10px; border: 1.5px solid #e5e7eb; font-size: 0.92rem; outline: none; font-family: inherit; transition: border-color 0.2s; }
-    select:focus, textarea:focus { border-color: #4f46e5; }
-    textarea { resize: vertical; min-height: 120px; }
-
+    textarea { width: 100%; padding: 12px 16px; border-radius: 10px; border: 1.5px solid #e5e7eb; font-size: 0.92rem; outline: none; font-family: inherit; resize: vertical; min-height: 120px; }
     .result-box { background: #f5f3ff; border: 1.5px solid #ddd6fe; border-radius: 12px; padding: 20px; margin-top: 16px; font-size: 0.92rem; line-height: 1.8; color: #2d2d4e; white-space: pre-wrap; }
     .result-box.feedback { background: #f0fdf4; border-color: #bbf7d0; color: #14532d; }
     .result-box.error { background: #fef2f2; border-color: #fecaca; color: #991b1b; }
-
     .loading { display: inline-block; width: 16px; height: 16px; border: 3px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 8px; }
+    .loading-dark { display: inline-block; width: 16px; height: 16px; border: 3px solid #e5e7eb; border-top-color: #4f46e5; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 8px; }
     @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* 주제 선택 */
     .topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; margin-bottom: 20px; }
     .topic-chip { padding: 10px 12px; border-radius: 10px; border: 2px solid #e5e7eb; background: white; cursor: pointer; font-size: 0.85rem; font-weight: 600; text-align: center; transition: all 0.2s; color: #374151; }
     .topic-chip:hover { border-color: #4f46e5; color: #4f46e5; background: #f5f3ff; }
     .topic-chip.selected { border-color: #4f46e5; background: #4f46e5; color: white; }
-
-    /* 난이도 */
+    .topic-chip:disabled { opacity: 0.5; cursor: not-allowed; }
     .level-btns { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
     .level-btn { padding: 10px 22px; border-radius: 8px; border: 2px solid #e5e7eb; background: white; cursor: pointer; font-weight: 700; font-size: 0.85rem; transition: all 0.2s; flex: 1; }
     .level-btn.IM { border-color: #86efac; color: #166534; }
@@ -64,54 +51,38 @@
     .level-btn.selected.IM { background: #86efac; }
     .level-btn.selected.IH { background: #fde68a; }
     .level-btn.selected.AL { background: #c4b5fd; }
-
-    /* 실전 말하기 탭 */
     .practice-step { display: none; }
     .practice-step.active { display: block; }
-
-    .step-indicator { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
-    .step-dot { width: 32px; height: 32px; border-radius: 50%; border: 2px solid #e5e7eb; background: white; color: #9ca3af; font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; }
+    .step-indicator { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 24px; }
+    .step-dot { width: 32px; height: 32px; border-radius: 50%; border: 2px solid #e5e7eb; background: white; color: #9ca3af; font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .step-dot.active { background: #4f46e5; border-color: #4f46e5; color: white; }
     .step-dot.done { background: #10b981; border-color: #10b981; color: white; }
-    .step-line { width: 30px; height: 2px; background: #e5e7eb; }
+    .step-line { width: 40px; height: 2px; background: #e5e7eb; flex-shrink: 0; }
     .step-line.done { background: #10b981; }
-
-    .question-display { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; border-radius: 16px; padding: 28px 24px; text-align: center; font-size: 1.1rem; font-weight: 700; line-height: 1.7; margin-bottom: 20px; min-height: 100px; display: flex; align-items: center; justify-content: center; }
-
-    .timer-big { font-size: 5rem; font-weight: 900; color: #4f46e5; text-align: center; padding: 12px 0; font-variant-numeric: tabular-nums; line-height: 1; }
+    .question-display { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; border-radius: 16px; padding: 28px 24px; text-align: center; font-size: 1.05rem; font-weight: 700; line-height: 1.7; margin-bottom: 20px; min-height: 90px; display: flex; align-items: center; justify-content: center; }
+    .timer-big { font-size: 5rem; font-weight: 900; color: #4f46e5; text-align: center; padding: 10px 0; font-variant-numeric: tabular-nums; line-height: 1; }
     .timer-big.warning { color: #ef4444; animation: pulse 1s infinite; }
-    .timer-label { text-align: center; font-size: 0.88rem; color: #6b7280; margin-bottom: 16px; font-weight: 600; }
+    .timer-label { text-align: center; font-size: 0.9rem; color: #6b7280; margin-bottom: 8px; font-weight: 700; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-
-    .record-btn { width: 80px; height: 80px; border-radius: 50%; border: none; font-size: 2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; transition: all 0.2s; }
+    .record-btn { width: 80px; height: 80px; border-radius: 50%; border: none; font-size: 2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; transition: all 0.2s; }
     .record-btn.idle { background: #fee2e2; color: #dc2626; box-shadow: 0 4px 12px rgba(220,38,38,0.3); }
-    .record-btn.recording { background: #dc2626; color: white; box-shadow: 0 0 0 8px rgba(220,38,38,0.2); animation: recordPulse 1.5s infinite; }
-    @keyframes recordPulse { 0%,100%{box-shadow:0 0 0 8px rgba(220,38,38,0.2)} 50%{box-shadow:0 0 0 16px rgba(220,38,38,0.05)} }
-
+    .record-btn.recording { background: #dc2626; color: white; animation: recordPulse 1.5s infinite; }
+    @keyframes recordPulse { 0%,100%{box-shadow:0 0 0 8px rgba(220,38,38,0.2)} 50%{box-shadow:0 0 0 18px rgba(220,38,38,0.05)} }
     .transcript-box { background: #f9fafb; border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 16px; min-height: 80px; font-size: 0.92rem; line-height: 1.7; color: #374151; margin-bottom: 16px; }
-
     .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
     .btn-row > * { flex: 1; min-width: 120px; }
-
     .api-notice { background: #fffbeb; border: 1.5px solid #fde68a; border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; font-size: 0.88rem; color: #92400e; display: none; }
     .api-notice.show { display: block; }
-
-    /* 표현 사전 */
-    .expr-category { margin-bottom: 24px; }
-    .expr-category h3 { font-size: 1rem; font-weight: 800; color: #4f46e5; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid #e0e7ff; }
-    .expr-item { background: #f9fafb; border-radius: 10px; padding: 12px 16px; border-left: 4px solid #4f46e5; margin-bottom: 8px; }
-    .expr-item .en { font-weight: 700; color: #1e1e2e; font-size: 0.92rem; }
-    .expr-item .ko { font-size: 0.8rem; color: #6b7280; margin-top: 2px; }
-    .expr-item .example { font-size: 0.8rem; color: #4f46e5; margin-top: 4px; font-style: italic; }
-
-    @media(max-width: 640px) {
+    .expr-item { background: #f9fafb; border-radius: 10px; padding: 12px 16px; border-left: 4px solid #4f46e5; margin-bottom: 8px; font-size: 0.92rem; line-height: 1.7; }
+    @media(max-width:640px) {
       header { padding: 14px 16px; }
-      .api-key-area input { width: 160px; }
+      .api-key-area input { width: 150px; }
       .page { padding: 14px; }
       .tabs { padding: 0 4px; }
-      .tab-btn { padding: 12px 10px; font-size: 0.8rem; }
+      .tab-btn { padding: 12px 8px; font-size: 0.78rem; }
       .timer-big { font-size: 4rem; }
-      .question-display { font-size: 1rem; padding: 20px 16px; }
+      .question-display { font-size: 0.92rem; padding: 20px 16px; }
+      .record-btn { width: 70px; height: 70px; }
     }
   </style>
 </head>
@@ -132,136 +103,112 @@
 </header>
 
 <div class="tabs">
-  <button class="tab-btn active" onclick="showPage('script', this)">📝 스크립트 생성</button>
-  <button class="tab-btn" onclick="showPage('practice', this)">🎙️ 실전 말하기</button>
-  <button class="tab-btn" onclick="showPage('feedback', this)">✏️ 내 답변 첨삭</button>
-  <button class="tab-btn" onclick="showPage('expressions', this)">📚 표현 사전</button>
+  <button class="tab-btn active" onclick="showPage('script',this)">📝 스크립트 생성</button>
+  <button class="tab-btn" onclick="showPage('practice',this)">🎙️ 실전 말하기</button>
+  <button class="tab-btn" onclick="showPage('feedback',this)">✏️ 내 답변 첨삭</button>
+  <button class="tab-btn" onclick="showPage('expressions',this)">📚 표현 사전</button>
 </div>
 
-<!-- ===== 1. 스크립트 생성 ===== -->
+<!-- 1. 스크립트 생성 -->
 <div id="page-script" class="page active">
-  <div class="api-notice" id="notice-script">⚠️ 상단에 Gemini API Key를 입력하고 저장 버튼을 눌러주세요.</div>
+  <div class="api-notice" id="notice-script">⚠️ 상단에 Gemini API Key를 입력하고 저장해주세요.</div>
   <div class="card">
     <h2>📝 오픽 주제별 스크립트 생성기</h2>
-    <p class="desc">주제와 난이도를 선택하면 AI가 오픽 스타일의 샘플 답변 스크립트를 생성해줍니다.</p>
-
+    <p class="desc">주제와 난이도를 선택하면 AI가 매번 새로운 오픽 스타일 답변 스크립트를 생성해줍니다.</p>
     <p style="font-weight:700;margin-bottom:10px;font-size:0.9rem;">① 주제 선택</p>
     <div class="topic-grid" id="topicGrid"></div>
-
     <p style="font-weight:700;margin-bottom:10px;font-size:0.9rem;">② 난이도 선택</p>
     <div class="level-btns">
-      <button class="level-btn IM" onclick="selectLevel('IM', this)">IM (중급)</button>
-      <button class="level-btn IH selected" onclick="selectLevel('IH', this)">IH (중고급)</button>
-      <button class="level-btn AL" onclick="selectLevel('AL', this)">AL (고급)</button>
+      <button class="level-btn IM" onclick="selectLevel('IM',this)">IM (중급)</button>
+      <button class="level-btn IH selected" onclick="selectLevel('IH',this)">IH (중고급)</button>
+      <button class="level-btn AL" onclick="selectLevel('AL',this)">AL (고급)</button>
     </div>
-
     <button class="btn-primary" id="generateBtn" onclick="generateScript()">✨ 스크립트 생성하기</button>
     <div id="scriptResult"></div>
   </div>
 </div>
 
-<!-- ===== 2. 실전 말하기 ===== -->
+<!-- 2. 실전 말하기 -->
 <div id="page-practice" class="page">
-  <div class="api-notice" id="notice-practice">⚠️ 상단에 Gemini API Key를 입력하고 저장 버튼을 눌러주세요.</div>
-
-  <!-- Step 표시 -->
+  <div class="api-notice" id="notice-practice">⚠️ 상단에 Gemini API Key를 입력하고 저장해주세요.</div>
   <div class="step-indicator">
-    <div class="step-dot active" id="sdot1">1</div>
-    <div class="step-line" id="sline1"></div>
-    <div class="step-dot" id="sdot2">2</div>
-    <div class="step-line" id="sline2"></div>
-    <div class="step-dot" id="sdot3">3</div>
-    <div class="step-line" id="sline3"></div>
+    <div class="step-dot active" id="sdot1">1</div><div class="step-line" id="sline1"></div>
+    <div class="step-dot" id="sdot2">2</div><div class="step-line" id="sline2"></div>
+    <div class="step-dot" id="sdot3">3</div><div class="step-line" id="sline3"></div>
     <div class="step-dot" id="sdot4">4</div>
   </div>
-
-  <!-- Step 1: 주제 선택 -->
   <div id="pstep1" class="practice-step active">
     <div class="card">
       <h2>① 주제를 선택하세요</h2>
-      <p class="desc">선택한 주제에 맞는 오픽 질문이 랜덤으로 출제됩니다.</p>
+      <p class="desc">선택하면 AI가 해당 주제의 오픽 질문을 실시간으로 생성합니다.</p>
       <div class="topic-grid" id="practiceTopicGrid"></div>
+      <div id="questionLoading" style="display:none;text-align:center;padding:20px;color:#6b7280;">
+        <span class="loading-dark"></span> AI가 질문을 생성하고 있어요...
+      </div>
     </div>
   </div>
-
-  <!-- Step 2: 질문 확인 -->
   <div id="pstep2" class="practice-step">
     <div class="card">
       <h2>② 질문을 확인하세요</h2>
-      <p class="desc">질문을 잘 읽고, 다시 듣고 싶으면 🔊 버튼을 누르세요. 준비되면 타이머를 시작하세요!</p>
-      <div class="question-display" id="practiceQuestion">질문이 여기에 표시됩니다.</div>
+      <p class="desc">질문을 읽고 준비하세요. 🔊로 다시 들을 수 있어요.</p>
+      <div class="question-display" id="practiceQuestion">질문 로딩 중...</div>
       <div class="btn-row">
         <button class="btn-secondary" onclick="speakQuestion()">🔊 다시 듣기</button>
-        <button class="btn-secondary" onclick="drawNewQuestion()">🎲 다른 질문</button>
-        <button class="btn-primary" style="flex:2" onclick="goToStep3()">▶ 준비됐어요! 타이머 시작</button>
+        <button class="btn-secondary" id="newQBtn" onclick="generateNewQuestion()">🎲 다른 질문</button>
+        <button class="btn-primary" style="flex:2" onclick="goToStep3()">▶ 준비됐어요! 시작</button>
       </div>
     </div>
   </div>
-
-  <!-- Step 3: 타이머 + 녹음 -->
   <div id="pstep3" class="practice-step">
     <div class="card">
       <h2>③ 말하면서 녹음하세요</h2>
-      <div class="question-display" id="practiceQuestion2" style="font-size:0.95rem;min-height:60px;margin-bottom:16px;padding:16px;"></div>
-
-      <div class="timer-label" id="timerLabel">답변 시간</div>
+      <div class="question-display" id="practiceQuestion2" style="font-size:0.92rem;min-height:60px;padding:16px;margin-bottom:16px;"></div>
+      <div class="timer-label" id="timerLabel">답변 시간 (2분)</div>
       <div class="timer-big" id="practiceTimer">2:00</div>
-
-      <div style="text-align:center;margin-bottom:20px;">
+      <div style="text-align:center;margin:16px 0 8px;">
         <button class="record-btn idle" id="recordBtn" onclick="toggleRecording()">🎤</button>
-        <div style="font-size:0.82rem;color:#6b7280;" id="recordStatus">버튼을 눌러 녹음 시작</div>
+        <div style="font-size:0.82rem;color:#6b7280;margin-top:4px;" id="recordStatus">버튼을 눌러 녹음 시작</div>
       </div>
-
-      <div style="font-weight:700;font-size:0.88rem;margin-bottom:8px;color:#374151;">📝 인식된 텍스트</div>
+      <div style="font-weight:700;font-size:0.85rem;margin-bottom:8px;color:#374151;">📝 인식된 텍스트</div>
       <div class="transcript-box" id="transcriptBox">녹음하면 여기에 텍스트가 자동으로 표시됩니다...</div>
-
       <div class="btn-row">
-        <button class="btn-secondary" onclick="speakQuestion2()">🔊 질문 다시 듣기</button>
+        <button class="btn-secondary" onclick="speakQuestion2()">🔊 질문 듣기</button>
         <button class="btn-danger" onclick="resetPractice()">↺ 처음부터</button>
         <button class="btn-primary" style="flex:2" id="evalBtn" onclick="goToStep4()" disabled>🔍 AI 평가 받기</button>
       </div>
     </div>
   </div>
-
-  <!-- Step 4: AI 평가 -->
   <div id="pstep4" class="practice-step">
     <div class="card">
       <h2>④ AI 평가 결과</h2>
       <p class="desc">내 답변에 대한 오픽 전문 피드백입니다.</p>
-
-      <div style="background:#f0f9ff;border:1.5px solid #bae6fd;border-radius:12px;padding:16px;margin-bottom:16px;">
-        <div style="font-size:0.8rem;color:#0369a1;font-weight:700;margin-bottom:6px;">📌 질문</div>
+      <div style="background:#f0f9ff;border:1.5px solid #bae6fd;border-radius:12px;padding:16px;margin-bottom:12px;">
+        <div style="font-size:0.78rem;color:#0369a1;font-weight:700;margin-bottom:4px;">📌 질문</div>
         <div style="font-size:0.92rem;color:#1e40af;font-weight:600;" id="evalQuestion"></div>
       </div>
-
-      <div style="background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:12px;padding:16px;margin-bottom:16px;">
-        <div style="font-size:0.8rem;color:#6b7280;font-weight:700;margin-bottom:6px;">🗣️ 내 답변 (인식된 텍스트)</div>
+      <div style="background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:12px;padding:16px;margin-bottom:12px;">
+        <div style="font-size:0.78rem;color:#6b7280;font-weight:700;margin-bottom:4px;">🗣️ 내 답변</div>
         <div style="font-size:0.88rem;color:#374151;line-height:1.7;" id="evalTranscript"></div>
       </div>
-
       <div id="evalResult"></div>
-
       <div class="btn-row" style="margin-top:16px;">
-        <button class="btn-secondary" onclick="resetPractice()">🔄 다시 연습하기</button>
-        <button class="btn-primary" onclick="showPage('script', document.querySelectorAll(\'.tab-btn\')[0])">📝 스크립트 보기</button>
+        <button class="btn-secondary" onclick="resetPractice()">🔄 다시 연습</button>
+        <button class="btn-primary" onclick="showPage('script',document.querySelectorAll('.tab-btn')[0])">📝 스크립트 보기</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ===== 3. 첨삭 ===== -->
+<!-- 3. 첨삭 -->
 <div id="page-feedback" class="page">
-  <div class="api-notice" id="notice-feedback">⚠️ 상단에 Gemini API Key를 입력하고 저장 버튼을 눌러주세요.</div>
+  <div class="api-notice" id="notice-feedback">⚠️ 상단에 Gemini API Key를 입력하고 저장해주세요.</div>
   <div class="card">
     <h2>✏️ 내 답변 첨삭 받기</h2>
-    <p class="desc">내가 쓴 영어 답변을 붙여넣으면 AI가 문법, 표현, 오픽 스타일로 피드백을 드립니다.</p>
-
+    <p class="desc">영어 답변을 붙여넣으면 AI가 문법, 표현, 오픽 스타일로 피드백을 드립니다.</p>
     <p style="font-weight:700;margin-bottom:8px;font-size:0.9rem;">① 오픽 주제 (선택사항)</p>
     <input type="text" id="feedbackTopic" placeholder="예: 자기소개, 여행 경험..." style="width:100%;padding:12px 16px;border-radius:10px;border:1.5px solid #e5e7eb;font-size:0.92rem;margin-bottom:16px;outline:none;font-family:inherit;"/>
-
     <p style="font-weight:700;margin-bottom:8px;font-size:0.9rem;">② 내 답변 입력</p>
     <textarea id="myAnswer" placeholder="여기에 영어로 작성한 답변을 붙여넣으세요..." rows="6"></textarea>
-
     <div style="margin-top:16px;">
       <button class="btn-primary" id="feedbackBtn" onclick="getFeedback()">🔍 첨삭 받기</button>
     </div>
@@ -269,177 +216,41 @@
   </div>
 </div>
 
-<!-- ===== 4. 표현 사전 ===== -->
+<!-- 4. 표현 사전 -->
 <div id="page-expressions" class="page">
+  <div class="api-notice" id="notice-expr">⚠️ 상단에 Gemini API Key를 입력하고 저장해주세요.</div>
   <div class="card">
     <h2>📚 오픽 고득점 표현 사전</h2>
-    <p class="desc">IH~AL 수준에서 자주 쓰이는 핵심 표현들을 모았습니다.</p>
-    <div id="exprContent"></div>
+    <p class="desc">주제를 선택하면 AI가 해당 주제에 맞는 핵심 표현과 예문을 실시간으로 생성해줍니다.</p>
+    <div class="topic-grid" id="exprTopicGrid"></div>
+    <div id="exprResult"></div>
   </div>
 </div>
-
 <script>
-// ===== 데이터 =====
 const TOPICS = [
-  "자기소개", "집 묘사", "여행 경험", "좋아하는 영화",
-  "운동/스포츠", "음악 감상", "쇼핑 경험", "외식 경험",
-  "공원/산책", "명절/기념일", "직장 생활", "주말 활동",
-  "친구와의 추억", "최근 본 공연", "국내 여행"
+  "자기소개","집 묘사","여행 경험","좋아하는 영화","운동/스포츠",
+  "음악 감상","쇼핑 경험","외식 경험","공원/산책","명절/기념일",
+  "직장 생활","주말 활동","친구와의 추억","최근 본 공연","국내 여행"
 ];
 
-const QUESTIONS = {
-  "자기소개": [
-    "Tell me about yourself. Where do you live and what do you do?",
-    "Describe your daily routine in detail.",
-    "Tell me about your family and home life.",
-    "What do you do in your free time?"
-  ],
-  "집 묘사": [
-    "Describe your home. What does it look like?",
-    "Tell me about your favorite room in your home and why you like it.",
-    "What do you usually do at home on weekends?"
-  ],
-  "여행 경험": [
-    "Tell me about a memorable trip you have taken.",
-    "Where would you like to travel and why?",
-    "Describe a problem you experienced while traveling.",
-    "Tell me about your most recent trip."
-  ],
-  "좋아하는 영화": [
-    "Tell me about your favorite movie and why you like it.",
-    "Describe the last movie you watched.",
-    "What kind of movies do you enjoy and why?",
-    "Tell me about a movie that had a big impact on you."
-  ],
-  "운동/스포츠": [
-    "Tell me about a sport or exercise you enjoy.",
-    "Describe a time when you played sports with others.",
-    "How has exercise changed your life?",
-    "What sport or physical activity do you do regularly?"
-  ],
-  "음악 감상": [
-    "What kind of music do you like and why?",
-    "Tell me about a memorable concert or performance you attended.",
-    "How does music affect your mood?",
-    "Who is your favorite singer or band?"
-  ],
-  "쇼핑 경험": [
-    "Where do you usually go shopping and what do you buy?",
-    "Tell me about a memorable shopping experience.",
-    "Do you prefer online or in-store shopping? Why?"
-  ],
-  "외식 경험": [
-    "Tell me about your favorite restaurant.",
-    "Describe a memorable dining experience.",
-    "What kind of food do you enjoy eating out?"
-  ],
-  "공원/산책": [
-    "Describe a park or outdoor place you like to visit.",
-    "Tell me about a walk or hike you have taken recently.",
-    "What do you usually do when you go to a park?"
-  ],
-  "직장 생활": [
-    "Describe your workplace or school.",
-    "Tell me about a challenging project you worked on.",
-    "What do you enjoy most about your work or studies?",
-    "Describe a typical day at work."
-  ],
-  "주말 활동": [
-    "What do you usually do on weekends?",
-    "Tell me about your most recent weekend.",
-    "How do you like to relax on your days off?"
-  ],
-  "친구와의 추억": [
-    "Tell me about your best friend.",
-    "Describe a memorable experience you had with a friend.",
-    "What do you usually do when you hang out with friends?"
-  ],
-  "명절/기념일": [
-    "Tell me about a holiday or celebration you enjoy.",
-    "Describe how you celebrate your favorite holiday.",
-    "What is your favorite memory from a holiday?"
-  ],
-  "최근 본 공연": [
-    "Tell me about the last performance or show you attended.",
-    "Describe your favorite type of performance.",
-    "Have you ever been to a concert or theater? Tell me about it."
-  ],
-  "국내 여행": [
-    "Tell me about a place in your country that you have visited.",
-    "Where in your country would you recommend visiting?",
-    "Describe a domestic trip you have taken recently."
-  ]
-};
-
-const EXPRESSIONS = [
-  {
-    category: "🗣️ 도입 & 전환 표현",
-    items: [
-      { en: "To be honest with you,", ko: "솔직히 말하면,", example: "To be honest with you, I wasn't expecting that at all." },
-      { en: "What I usually do is...", ko: "제가 보통 하는 것은...", example: "What I usually do is go for a walk after dinner." },
-      { en: "Now that I think about it,", ko: "지금 생각해보니,", example: "Now that I think about it, that was one of my best trips." },
-      { en: "Actually, come to think of it,", ko: "사실, 생각해보니,", example: "Actually, come to think of it, there was one time..." },
-      { en: "The thing is,", ko: "사실은요,", example: "The thing is, I didn't really enjoy it at first." },
-    ]
-  },
-  {
-    category: "📖 경험 묘사 표현",
-    items: [
-      { en: "It was around (+ 시간/때)", ko: "그때가 ~였는데,", example: "It was around three years ago when I first visited Jeju." },
-      { en: "I remember it clearly because...", ko: "~때문에 생생히 기억해요", example: "I remember it clearly because it was my first time abroad." },
-      { en: "One thing that stands out is...", ko: "특히 기억에 남는 건...", example: "One thing that stands out is the amazing food we had." },
-      { en: "That was quite an experience.", ko: "정말 인상 깊은 경험이었어요.", example: "Looking back, that was quite an experience." },
-    ]
-  },
-  {
-    category: "💬 의견 & 이유 표현",
-    items: [
-      { en: "The main reason why I... is that...", ko: "제가 ~하는 주된 이유는...", example: "The main reason why I enjoy hiking is that it clears my mind." },
-      { en: "What I find most appealing is...", ko: "제가 가장 매력적으로 느끼는 건...", example: "What I find most appealing is the peaceful atmosphere." },
-      { en: "I'd say... more than anything else.", ko: "무엇보다도 ~라고 할 수 있어요.", example: "I'd say the community feeling more than anything else." },
-      { en: "In my opinion / From my perspective,", ko: "제 생각엔 / 제 관점에서는,", example: "From my perspective, teamwork is the key to success." },
-    ]
-  },
-  {
-    category: "⏫ 고급 어휘 & 연결어",
-    items: [
-      { en: "As a result / Consequently,", ko: "그 결과,", example: "As a result, I became much more confident." },
-      { en: "Not only that, but also...", ko: "그뿐만 아니라...", example: "Not only that, but also I made great friends there." },
-      { en: "Despite the fact that...", ko: "~임에도 불구하고,", example: "Despite the fact that it was raining, we had a great time." },
-      { en: "What made it special was...", ko: "그것을 특별하게 만든 건...", example: "What made it special was the unexpected kindness of strangers." },
-      { en: "Looking back on it now,", ko: "지금 돌이켜보면,", example: "Looking back on it now, I'm really glad I took that chance." },
-    ]
-  },
-  {
-    category: "🔚 마무리 표현",
-    items: [
-      { en: "Overall, it was a great experience.", ko: "전반적으로 정말 좋은 경험이었어요.", example: "Overall, it was a great experience that I'll never forget." },
-      { en: "That's pretty much it.", ko: "대략 그게 전부예요.", example: "That's pretty much it about my typical weekend." },
-      { en: "I'd definitely recommend it.", ko: "정말 추천하고 싶어요.", example: "If you ever get the chance, I'd definitely recommend it." },
-    ]
-  }
-];
-
-// ===== API Key =====
 let apiKey = localStorage.getItem("gemini_api_key") || "";
+if (apiKey) document.getElementById("apiKeyInput").placeholder = "API Key 저장됨 ✓";
 
 function saveApiKey() {
-  const input = document.getElementById("apiKeyInput").value.trim();
-  if (input) {
-    apiKey = input;
-    localStorage.setItem("gemini_api_key", apiKey);
-    document.getElementById("apiKeyInput").value = "";
-    document.getElementById("apiKeyInput").placeholder = "API Key 저장됨 ✓";
-    alert("✅ API Key가 저장되었습니다!");
-    checkApiKey();
-  }
+  const v = document.getElementById("apiKeyInput").value.trim();
+  if (!v) return;
+  apiKey = v;
+  localStorage.setItem("gemini_api_key", apiKey);
+  document.getElementById("apiKeyInput").value = "";
+  document.getElementById("apiKeyInput").placeholder = "API Key 저장됨 ✓";
+  alert("✅ 저장됐습니다!");
+  checkApiKey();
 }
 
 function checkApiKey() {
   document.querySelectorAll(".api-notice").forEach(n => n.classList.toggle("show", !apiKey));
 }
 
-// ===== 탭 =====
 function showPage(name, btn) {
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
   document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
@@ -448,7 +259,6 @@ function showPage(name, btn) {
   checkApiKey();
 }
 
-// ===== Gemini API =====
 async function callGemini(prompt) {
   if (!apiKey) throw new Error("API Key가 없습니다. 상단에 입력해주세요.");
   const res = await fetch(
@@ -468,8 +278,8 @@ async function callGemini(prompt) {
 let selectedTopic = "";
 let selectedLevel = "IH";
 
-function buildTopicGrid(containerId, onSelect) {
-  const grid = document.getElementById(containerId);
+function buildTopicGrid(id, onSelect) {
+  const grid = document.getElementById(id);
   TOPICS.forEach(t => {
     const btn = document.createElement("button");
     btn.className = "topic-chip";
@@ -499,21 +309,291 @@ async function generateScript() {
   btn.disabled = true;
   btn.innerHTML = '<span class="loading"></span>생성 중...';
   result.innerHTML = "";
-  const levelDesc = { IM: "중급 (IM): 간단한 문장 위주, 기본 어휘", IH: "중고급 (IH): 다양한 문장 구조, 자연스러운 표현", AL: "고급 (AL): 복잡한 문장, 고급 어휘, 원어민 수준" };
-  const prompt = `You are an OPIc English speaking coach. Generate a sample OPIc answer script.
+  const levelDesc = {
+    IM: "중급(IM) - 간단하고 짧은 문장, 기본 어휘",
+    IH: "중고급(IH) - 다양한 문장 구조, 자연스러운 구어 표현",
+    AL: "고급(AL) - 복잡한 문장, 고급 어휘, 원어민스러운 표현"
+  };
+  try {
+    const text = await callGemini(
+      `You are an OPIc English speaking coach. Generate a completely new and unique OPIc answer script every time.
 Topic: ${selectedTopic}
 Level: ${levelDesc[selectedLevel]}
-Requirements:
-- Natural spoken English (not too formal)
-- Length: 8-12 sentences
-- Add Korean translation below each paragraph
-- Format: [English] then [Korean translation]
-- Natural opening sentence`;
-  try {
-    const text = await callGemini(prompt);
+- Natural spoken English (NOT formal/written style), 8-12 sentences
+- Add Korean translation in parentheses after each paragraph
+- Sound like a real person speaking with specific personal details
+- Generate a fresh unique script each time (vary the content, angle, examples)`
+    );
     result.innerHTML = `<div class="result-box">${escapeHtml(text)}</div>`;
   } catch(e) {
     result.innerHTML = `<div class="result-box error">❌ 오류: ${e.message}</div>`;
   }
   btn.disabled = false;
-  btn.innerHTML = "✨ 스크립트 생성
+  btn.innerHTML = "✨ 스크립트 생성하기";
+}
+
+// ===== 2. 실전 말하기 =====
+let currentQuestion = "";
+let currentPracticeTopic = "";
+let practiceTimer = null;
+let practiceSeconds = 120;
+let isRecording = false;
+let recognition = null;
+let fullTranscript = "";
+
+buildTopicGrid("practiceTopicGrid", async (t) => {
+  if (!apiKey) { checkApiKey(); return; }
+  currentPracticeTopic = t;
+  fullTranscript = "";
+  document.getElementById("questionLoading").style.display = "block";
+  document.querySelectorAll("#practiceTopicGrid .topic-chip").forEach(c => c.disabled = true);
+  try {
+    await generateNewQuestion();
+    goToStep(2);
+  } catch(e) {
+    alert("질문 생성 오류: " + e.message);
+  } finally {
+    document.getElementById("questionLoading").style.display = "none";
+    document.querySelectorAll("#practiceTopicGrid .topic-chip").forEach(c => c.disabled = false);
+  }
+});
+
+async function generateNewQuestion() {
+  const btn = document.getElementById("newQBtn");
+  if (btn) { btn.disabled = true; btn.textContent = "생성 중..."; }
+  try {
+    const text = await callGemini(
+      `You are an OPIc English speaking test examiner. Generate ONE unique OPIc speaking question about: "${currentPracticeTopic}"
+- Must be in English
+- Natural OPIc-style question
+- Generate a completely DIFFERENT question every single time
+- Output ONLY the question itself with no extra text`
+    );
+    currentQuestion = text.trim().replace(/^["'\d.\s]+|["']$/g, "").trim();
+    document.getElementById("practiceQuestion").textContent = "❓ " + currentQuestion;
+    document.getElementById("practiceQuestion2").textContent = "❓ " + currentQuestion;
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = "🎲 다른 질문"; }
+  }
+}
+
+function speakQuestion() { speak(currentQuestion); }
+function speakQuestion2() { speak(currentQuestion); }
+
+function speak(text) {
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "en-US"; u.rate = 0.88;
+  window.speechSynthesis.speak(u);
+}
+
+function goToStep3() {
+  goToStep(3);
+  startPracticeTimer();
+}
+
+function startPracticeTimer() {
+  clearInterval(practiceTimer);
+  practiceSeconds = 120;
+  updateTimerDisplay();
+  document.getElementById("timerLabel").textContent = "답변 시간 (2분)";
+  document.getElementById("practiceTimer").className = "timer-big";
+  practiceTimer = setInterval(() => {
+    practiceSeconds--;
+    updateTimerDisplay();
+    if (practiceSeconds <= 20) document.getElementById("practiceTimer").classList.add("warning");
+    if (practiceSeconds <= 0) {
+      clearInterval(practiceTimer);
+      if (isRecording) stopRecognition();
+      document.getElementById("practiceTimer").textContent = "종료!";
+      document.getElementById("evalBtn").disabled = false;
+      speak("Time is up! Please stop speaking.");
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(practiceSeconds / 60);
+  const s = practiceSeconds % 60;
+  document.getElementById("practiceTimer").textContent = `${m}:${s.toString().padStart(2,"0")}`;
+}
+
+function toggleRecording() {
+  if (!isRecording) startRecognition();
+  else stopRecognition();
+}
+
+function startRecognition() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { alert("Chrome 또는 Android Chrome 브라우저를 사용해주세요."); return; }
+  recognition = new SR();
+  recognition.lang = "en-US";
+  recognition.continuous = true;
+  recognition.interimResults = true;
+  recognition.onstart = () => {
+    isRecording = true;
+    document.getElementById("recordBtn").className = "record-btn recording";
+    document.getElementById("recordBtn").textContent = "⏹";
+    document.getElementById("recordStatus").textContent = "🔴 녹음 중... 다시 누르면 정지";
+  };
+  recognition.onresult = (e) => {
+    let interim = "", final = "";
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      if (e.results[i].isFinal) final += e.results[i][0].transcript + " ";
+      else interim += e.results[i][0].transcript;
+    }
+    fullTranscript += final;
+    document.getElementById("transcriptBox").textContent = fullTranscript + interim;
+    if (fullTranscript.trim()) document.getElementById("evalBtn").disabled = false;
+  };
+  recognition.onerror = (e) => {
+    if (e.error === "not-allowed") alert("마이크 권한을 허용해주세요!");
+    stopRecognition();
+  };
+  recognition.onend = () => { if (isRecording) recognition.start(); };
+  recognition.start();
+}
+
+function stopRecognition() {
+  isRecording = false;
+  if (recognition) { recognition.onend = null; recognition.stop(); }
+  document.getElementById("recordBtn").className = "record-btn idle";
+  document.getElementById("recordBtn").textContent = "🎤";
+  document.getElementById("recordStatus").textContent = "녹음 정지됨. 다시 누르면 이어서 녹음";
+}
+
+async function goToStep4() {
+  if (!fullTranscript.trim()) { alert("녹음된 텍스트가 없어요!"); return; }
+  clearInterval(practiceTimer);
+  if (isRecording) stopRecognition();
+  goToStep(4);
+  document.getElementById("evalQuestion").textContent = currentQuestion;
+  document.getElementById("evalTranscript").textContent = fullTranscript.trim();
+  const result = document.getElementById("evalResult");
+  result.innerHTML = '<div style="text-align:center;padding:24px;color:#6b7280;"><span class="loading-dark"></span> AI가 평가 중이에요...</div>';
+  try {
+    const text = await callGemini(
+      `You are an OPIc English speaking coach. Evaluate this student's spoken answer and provide detailed feedback in Korean.
+
+Question: "${currentQuestion}"
+Student's Answer: "${fullTranscript.trim()}"
+
+Provide feedback with this structure:
+
+1. 📊 종합 평가
+- 예상 오픽 레벨 (IM1~AL)과 전반적 평가 2-3문장
+
+2. ✅ 잘한 점
+- 좋은 표현이나 문장 구조 (구체적으로 인용해서)
+
+3. 🔧 개선할 점
+- 문법 오류, 어색한 표현, 부자연스러운 부분 (구체적으로)
+
+4. 💡 더 나은 표현 제안
+- 고급 표현으로 바꿀 수 있는 문장 3개 이상 (원문 → 개선안 형식)
+
+5. 📝 수정된 전체 답변
+- IH~AL 수준으로 전체 답변을 다시 작성`
+    );
+    result.innerHTML = `<div class="result-box feedback">${escapeHtml(text)}</div>`;
+  } catch(e) {
+    result.innerHTML = `<div class="result-box error">❌ 오류: ${e.message}</div>`;
+  }
+}
+
+function goToStep(n) {
+  document.querySelectorAll(".practice-step").forEach(s => s.classList.remove("active"));
+  document.getElementById("pstep" + n).classList.add("active");
+  for (let i = 1; i <= 4; i++) {
+    const dot = document.getElementById("sdot" + i);
+dot.className = "step-dot" + (i < n ? " done" : i === n ? " active" : "");
+    if (i < 4) {
+      const line = document.getElementById("sline" + i);
+      if (line) line.className = "step-line" + (i < n ? " done" : "");
+    }
+  }
+}
+
+function resetPractice() {
+  clearInterval(practiceTimer);
+  if (isRecording) stopRecognition();
+  fullTranscript = "";
+  currentQuestion = "";
+  currentPracticeTopic = "";
+  document.getElementById("transcriptBox").textContent = "녹음하면 여기에 텍스트가 자동으로 표시됩니다...";
+  document.getElementById("evalBtn").disabled = true;
+  document.getElementById("practiceTimer").textContent = "2:00";
+  document.getElementById("practiceTimer").className = "timer-big";
+  document.querySelectorAll("#practiceTopicGrid .topic-chip").forEach(c => c.classList.remove("selected"));
+  goToStep(1);
+}
+
+// ===== 3. 첨삭 =====
+async function getFeedback() {
+  if (!apiKey) { checkApiKey(); return; }
+  const answer = document.getElementById("myAnswer").value.trim();
+  if (!answer) { alert("답변을 입력해주세요!"); return; }
+  const topic = document.getElementById("feedbackTopic").value.trim();
+  const btn = document.getElementById("feedbackBtn");
+  const result = document.getElementById("feedbackResult");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading"></span>분석 중...';
+  result.innerHTML = "";
+  try {
+    const text = await callGemini(
+      `You are an OPIc English speaking coach. Give detailed feedback on this student's answer in Korean.
+${topic ? "Topic: " + topic : ""}
+Student's answer: "${answer}"
+
+Structure:
+1. 📊 전체 평가 - 예상 오픽 레벨 및 전반 평가
+2. ✅ 잘한 점 - 좋은 표현 구체적으로
+3. 🔧 개선할 점 - 문법 오류, 어색한 표현
+4. 💡 더 나은 표현 제안 - 원문 → 개선안 3개 이상
+5. 📝 수정된 전체 답변 - IH~AL 수준으로 재작성`
+    );
+    result.innerHTML = `<div class="result-box feedback">${escapeHtml(text)}</div>`;
+  } catch(e) {
+    result.innerHTML = `<div class="result-box error">❌ 오류: ${e.message}</div>`;
+  }
+  btn.disabled = false;
+  btn.innerHTML = "🔍 첨삭 받기";
+}
+
+// ===== 4. 표현 사전 =====
+buildTopicGrid("exprTopicGrid", async (t) => {
+  if (!apiKey) { checkApiKey(); return; }
+  const result = document.getElementById("exprResult");
+  result.innerHTML = '<div style="text-align:center;padding:24px;color:#6b7280;"><span class="loading-dark"></span> AI가 표현을 생성하고 있어요...</div>';
+  try {
+    const text = await callGemini(
+      `You are an OPIc English speaking coach. Generate useful English expressions for OPIc speaking topic: "${t}"
+
+Provide 5-7 key expressions with the following format for each:
+[영어 표현]
+한국어 의미: (Korean meaning)
+예문: (Example sentence using this expression)
+
+Make the expressions natural, spoken-style, and useful for IH~AL level OPIc responses.
+Include transition phrases, topic-specific vocabulary, and natural connectors.`
+    );
+    result.innerHTML = `<div style="margin-top:8px;"><div style="font-size:0.82rem;color:#4f46e5;font-weight:700;margin-bottom:12px;">✨ "${t}" 주제 핵심 표현</div><div class="expr-item">${escapeHtml(text)}</div></div>`;
+  } catch(e) {
+    result.innerHTML = `<div class="result-box error">❌ 오류: ${e.message}</div>`;
+  }
+});
+
+// ===== 유틸 =====
+function escapeHtml(text) {
+  return text
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/\n/g,"<br/>");
+}
+
+checkApiKey();
+</script>
+</body>
+</html>
+  
