@@ -1069,3 +1069,62 @@ IH~AL 수준으로 재작성`
   } catch(e) {
     result.innerHTML = `<div class="result-box error">❌ 오류: ${e.message}</div>`;
   }
+btn.disabled = false;
+btn.innerHTML = "🔍 첨삭 받기";
+}
+
+// ===== 5. 표현 사전 =====
+buildTopicGrid("exprTopicGrid", async (t) => {
+  if (!apiKey) { checkApiKey(); return; }
+  const result = document.getElementById("exprResult");
+  result.innerHTML = '<div style="text-align:center;padding:24px;color:var(--text2)"><span class="loading-dark"></span> 표현 생성 중...</div>';
+  try {
+    const text = await callGemini(
+      `You are an OPIc English speaking coach. Generate 8 key expressions for OPIc topic: "${t}"
+
+For each expression provide:
+- The English expression/phrase
+- Korean meaning
+- One natural example sentence
+
+Format each item as:
+[표현] expression here
+[의미] Korean meaning
+[예문] Example sentence here
+
+Generate all 8 expressions now.`
+    );
+    const items = text.split(/\[표현\]/).filter(s => s.trim());
+    result.innerHTML = items.map(item => {
+      const expr = (item.match(/^([^\[]+)/) || ["",""])[1].trim();
+      const meaning = (item.match(/\[의미\]([^\[]+)/) || ["",""])[1].trim();
+      const example = (item.match(/\[예문\]([^\[]+)/) || ["",""])[1].trim();
+      if (!expr) return "";
+      return `
+        <div class="expr-item">
+          <div style="font-weight:800;color:var(--primary);margin-bottom:4px;">💬 ${escapeHtml(expr)}</div>
+          <div style="font-size:0.82rem;color:var(--text2);margin-bottom:6px;">🇰🇷 ${escapeHtml(meaning)}</div>
+          <div style="font-size:0.88rem;color:var(--text3);font-style:italic;">📌 ${escapeHtml(example)}</div>
+        </div>`;
+    }).join("");
+  } catch(e) {
+    result.innerHTML = `<div class="result-box error">❌ 오류: ${e.message}</div>`;
+  }
+});
+
+// ===== 유틸 =====
+function escapeHtml(s) {
+  if (!s) return "";
+  return String(s)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;");
+}
+
+// ===== 초기화 =====
+checkApiKey();
+
+</script>
+</body>
+</html>
