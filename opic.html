@@ -1,112 +1,181 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-theme="light">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>OPIc 영어회화 트레이너</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: "Noto Sans KR", "Apple SD Gothic Neo", sans-serif; background: #f0f4ff; color: #1e1e2e; min-height: 100vh; }
-    header { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 12px rgba(79,70,229,0.3); position: sticky; top: 0; z-index: 100; flex-wrap: wrap; gap: 12px; }
-    .logo { display: flex; align-items: center; gap: 12px; }
-    .logo-icon { font-size: 28px; }
-    .logo h1 { font-size: 1.3rem; font-weight: 800; }
-    .logo span { font-size: 0.75rem; opacity: 0.8; display: block; }
-    .api-key-area { display: flex; gap: 8px; align-items: center; }
-    .api-key-area input { padding: 8px 14px; border-radius: 8px; border: none; font-size: 0.82rem; width: 220px; outline: none; background: rgba(255,255,255,0.15); color: white; }
-    .api-key-area input::placeholder { color: rgba(255,255,255,0.6); }
-    .api-key-area button { padding: 8px 16px; border-radius: 8px; border: none; background: white; color: #4f46e5; font-weight: 700; cursor: pointer; font-size: 0.82rem; }
-    .tabs { display: flex; background: white; border-bottom: 2px solid #e5e7eb; padding: 0 24px; overflow-x: auto; }
-    .tab-btn { padding: 14px 18px; border: none; background: transparent; color: #6b7280; cursor: pointer; font-size: 0.88rem; font-weight: 600; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.2s; white-space: nowrap; }
-    .tab-btn:hover { color: #4f46e5; background: #f5f3ff; }
-    .tab-btn.active { color: #4f46e5; border-bottom-color: #4f46e5; }
-    .page { display: none; padding: 24px; max-width: 900px; margin: 0 auto; }
-    .page.active { display: block; }
-    .card { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 20px; }
-    .card h2 { font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; }
-    .card .desc { font-size: 0.85rem; color: #6b7280; margin-bottom: 20px; }
-    .btn-primary { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; border: none; padding: 14px 28px; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 0.95rem; transition: opacity 0.2s; width: 100%; }
-    .btn-primary:hover { opacity: 0.88; }
-    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-    .btn-secondary { background: #f3f4f6; color: #374151; border: none; padding: 12px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.88rem; transition: background 0.2s; }
-    .btn-secondary:hover { background: #e5e7eb; }
-    .btn-danger { background: #fee2e2; color: #dc2626; border: none; padding: 12px 20px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 0.88rem; }
-    textarea { width: 100%; padding: 12px 16px; border-radius: 10px; border: 1.5px solid #e5e7eb; font-size: 0.92rem; outline: none; font-family: inherit; resize: vertical; min-height: 120px; }
-    .result-box { background: #f5f3ff; border: 1.5px solid #ddd6fe; border-radius: 12px; padding: 20px; margin-top: 16px; font-size: 0.92rem; line-height: 1.8; color: #2d2d4e; white-space: pre-wrap; }
-    .result-box.feedback { background: #f0fdf4; border-color: #bbf7d0; color: #14532d; }
-    .result-box.error { background: #fef2f2; border-color: #fecaca; color: #991b1b; }
-    .loading { display: inline-block; width: 16px; height: 16px; border: 3px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 8px; }
-    .loading-dark { display: inline-block; width: 16px; height: 16px; border: 3px solid #e5e7eb; border-top-color: #4f46e5; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 8px; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; margin-bottom: 20px; }
-    .topic-chip { padding: 10px 12px; border-radius: 10px; border: 2px solid #e5e7eb; background: white; cursor: pointer; font-size: 0.85rem; font-weight: 600; text-align: center; transition: all 0.2s; color: #374151; }
-    .topic-chip:hover { border-color: #4f46e5; color: #4f46e5; background: #f5f3ff; }
-    .topic-chip.selected { border-color: #4f46e5; background: #4f46e5; color: white; }
-    .topic-chip:disabled { opacity: 0.5; cursor: not-allowed; }
-    .level-btns { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-    .level-btn { padding: 10px 22px; border-radius: 8px; border: 2px solid #e5e7eb; background: white; cursor: pointer; font-weight: 700; font-size: 0.85rem; transition: all 0.2s; flex: 1; }
-    .level-btn.IM { border-color: #86efac; color: #166534; }
-    .level-btn.IH { border-color: #fde68a; color: #92400e; }
-    .level-btn.AL { border-color: #c4b5fd; color: #4c1d95; }
-    .level-btn.selected.IM { background: #86efac; }
-    .level-btn.selected.IH { background: #fde68a; }
-    .level-btn.selected.AL { background: #c4b5fd; }
-    .practice-step { display: none; }
-    .practice-step.active { display: block; }
-    .step-indicator { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 24px; }
-    .step-dot { width: 32px; height: 32px; border-radius: 50%; border: 2px solid #e5e7eb; background: white; color: #9ca3af; font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .step-dot.active { background: #4f46e5; border-color: #4f46e5; color: white; }
-    .step-dot.done { background: #10b981; border-color: #10b981; color: white; }
-    .step-line { width: 40px; height: 2px; background: #e5e7eb; flex-shrink: 0; }
-    .step-line.done { background: #10b981; }
-    .question-display { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; border-radius: 16px; padding: 28px 24px; text-align: center; font-size: 1.05rem; font-weight: 700; line-height: 1.7; margin-bottom: 20px; min-height: 90px; display: flex; align-items: center; justify-content: center; }
-    .timer-big { font-size: 5rem; font-weight: 900; color: #4f46e5; text-align: center; padding: 10px 0; font-variant-numeric: tabular-nums; line-height: 1; }
-    .timer-big.warning { color: #ef4444; animation: pulse 1s infinite; }
-    .timer-label { text-align: center; font-size: 0.9rem; color: #6b7280; margin-bottom: 8px; font-weight: 700; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-    .record-btn { width: 80px; height: 80px; border-radius: 50%; border: none; font-size: 2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; transition: all 0.2s; }
-    .record-btn.idle { background: #fee2e2; color: #dc2626; box-shadow: 0 4px 12px rgba(220,38,38,0.3); }
-    .record-btn.recording { background: #dc2626; color: white; animation: recordPulse 1.5s infinite; }
-    @keyframes recordPulse { 0%,100%{box-shadow:0 0 0 8px rgba(220,38,38,0.2)} 50%{box-shadow:0 0 0 18px rgba(220,38,38,0.05)} }
-    .transcript-box { background: #f9fafb; border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 16px; min-height: 80px; font-size: 0.92rem; line-height: 1.7; color: #374151; margin-bottom: 16px; }
-    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
-    .btn-row > * { flex: 1; min-width: 120px; }
-    .api-notice { background: #fffbeb; border: 1.5px solid #fde68a; border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; font-size: 0.88rem; color: #92400e; display: none; }
-    .api-notice.show { display: block; }
-    .expr-item { background: #f9fafb; border-radius: 10px; padding: 12px 16px; border-left: 4px solid #4f46e5; margin-bottom: 8px; font-size: 0.92rem; line-height: 1.7; }
-    @media(max-width:640px) {
-      header { padding: 14px 16px; }
-      .api-key-area input { width: 150px; }
-      .page { padding: 14px; }
-      .tabs { padding: 0 4px; }
-      .tab-btn { padding: 12px 8px; font-size: 0.78rem; }
-      .timer-big { font-size: 4rem; }
-      .question-display { font-size: 0.92rem; padding: 20px 16px; }
-      .record-btn { width: 70px; height: 70px; }
+    :root {
+      --bg:#f0f4ff;--surface:#ffffff;--border:#e5e7eb;
+      --text:#1e1e2e;--text2:#6b7280;--text3:#374151;
+      --primary:#4f46e5;--primary2:#7c3aed;
+      --card-shadow:0 2px 12px rgba(0,0,0,0.07);
+    }
+    [data-theme="dark"] {
+      --bg:#0f1117;--surface:#1a1d2e;--border:#2d3148;
+      --text:#e1e4e8;--text2:#8b949e;--text3:#c9d1d9;
+      --primary:#818cf8;--primary2:#a78bfa;
+      --card-shadow:0 2px 12px rgba(0,0,0,0.4);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:"Noto Sans KR","Apple SD Gothic Neo",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background 0.3s,color 0.3s;}
+    header{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:white;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 12px rgba(79,70,229,0.3);position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:10px;}
+    .logo{display:flex;align-items:center;gap:10px;}
+    .logo-icon{font-size:26px;}
+    .logo h1{font-size:1.2rem;font-weight:800;}
+    .logo span{font-size:0.72rem;opacity:0.8;display:block;}
+    .header-right{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+    .api-key-area{display:flex;gap:6px;align-items:center;}
+    .api-key-area input{padding:7px 12px;border-radius:8px;border:none;font-size:0.8rem;width:200px;outline:none;background:rgba(255,255,255,0.15);color:white;}
+    .api-key-area input::placeholder{color:rgba(255,255,255,0.6);}
+    .api-key-area button{padding:7px 14px;border-radius:8px;border:none;background:white;color:#4f46e5;font-weight:700;cursor:pointer;font-size:0.8rem;}
+    .dark-toggle{padding:7px 12px;border-radius:8px;border:none;background:rgba(255,255,255,0.15);color:white;cursor:pointer;font-size:1rem;}
+    .tabs{display:flex;background:var(--surface);border-bottom:2px solid var(--border);padding:0 20px;overflow-x:auto;transition:background 0.3s;}
+    .tab-btn{padding:13px 15px;border:none;background:transparent;color:var(--text2);cursor:pointer;font-size:0.84rem;font-weight:600;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all 0.2s;white-space:nowrap;}
+    .tab-btn:hover{color:var(--primary);background:rgba(79,70,229,0.05);}
+    .tab-btn.active{color:var(--primary);border-bottom-color:var(--primary);}
+    .page{display:none;padding:24px;max-width:920px;margin:0 auto;}
+    .page.active{display:block;}
+    .card{background:var(--surface);border-radius:16px;padding:24px;box-shadow:var(--card-shadow);margin-bottom:20px;border:1px solid var(--border);transition:background 0.3s,border-color 0.3s;}
+    .card h2{font-size:1.1rem;font-weight:800;margin-bottom:6px;color:var(--text);}
+    .card .desc{font-size:0.85rem;color:var(--text2);margin-bottom:20px;line-height:1.6;}
+    .btn-primary{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:white;border:none;padding:13px 24px;border-radius:12px;font-weight:700;cursor:pointer;font-size:0.92rem;transition:opacity 0.2s;width:100%;}
+    .btn-primary:hover{opacity:0.88;}
+    .btn-primary:disabled{opacity:0.5;cursor:not-allowed;}
+    .btn-secondary{background:var(--bg);color:var(--text3);border:1px solid var(--border);padding:11px 18px;border-radius:10px;font-weight:600;cursor:pointer;font-size:0.86rem;transition:all 0.2s;}
+    .btn-secondary:hover{background:var(--border);}
+    .btn-danger{background:#fee2e2;color:#dc2626;border:none;padding:11px 18px;border-radius:10px;font-weight:700;cursor:pointer;font-size:0.86rem;}
+    textarea{width:100%;padding:12px 16px;border-radius:10px;border:1.5px solid var(--border);font-size:0.92rem;outline:none;font-family:inherit;resize:vertical;min-height:120px;background:var(--surface);color:var(--text);transition:border-color 0.2s,background 0.3s;}
+    textarea:focus{border-color:var(--primary);}
+    .result-box{border-radius:12px;padding:20px;margin-top:16px;font-size:0.94rem;line-height:1.9;}
+    .result-box.script{background:var(--surface);border:1.5px solid var(--border);color:var(--text3);}
+    .result-box.error{background:#fef2f2;border:1.5px solid #fecaca;color:#991b1b;border-radius:12px;padding:16px;margin-top:16px;}
+    [data-theme="dark"] .result-box.error{background:#450a0a;border-color:#b91c1c;color:#fca5a5;}
+    .result-section{border-radius:10px;padding:16px 20px;margin-bottom:12px;font-size:0.93rem;line-height:1.9;}
+    .result-section h3{font-size:0.9rem;font-weight:800;margin-bottom:8px;}
+    .result-section.overall{background:#eff6ff;border-left:4px solid #3b82f6;color:#1e3a5f;}
+    .result-section.good{background:#f0fdf4;border-left:4px solid #22c55e;color:#14532d;}
+    .result-section.improve{background:#fff7ed;border-left:4px solid #f97316;color:#7c2d12;}
+    .result-section.suggest{background:#faf5ff;border-left:4px solid #a855f7;color:#4a1d96;}
+    .result-section.revised{background:#f0f9ff;border-left:4px solid #0ea5e9;color:#0c4a6e;}
+    [data-theme="dark"] .result-section.overall{background:#1e3a5f;border-left-color:#60a5fa;color:#bfdbfe;}
+    [data-theme="dark"] .result-section.good{background:#052e16;border-left-color:#4ade80;color:#bbf7d0;}
+    [data-theme="dark"] .result-section.improve{background:#431407;border-left-color:#fb923c;color:#fed7aa;}
+    [data-theme="dark"] .result-section.suggest{background:#2e1065;border-left-color:#c084fc;color:#e9d5ff;}
+    [data-theme="dark"] .result-section.revised{background:#0c4a6e;border-left-color:#38bdf8;color:#bae6fd;}
+    .loading{display:inline-block;width:15px;height:15px;border:3px solid rgba(255,255,255,0.4);border-top-color:white;border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:6px;}
+    .loading-dark{display:inline-block;width:15px;height:15px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:6px;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .topic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:8px;margin-bottom:20px;}
+    .topic-chip{padding:10px 12px;border-radius:10px;border:2px solid var(--border);background:var(--surface);cursor:pointer;font-size:0.84rem;font-weight:600;text-align:center;transition:all 0.2s;color:var(--text3);}
+    .topic-chip:hover{border-color:var(--primary);color:var(--primary);background:rgba(79,70,229,0.06);}
+    .topic-chip.selected{border-color:#4f46e5;background:#4f46e5;color:white;}
+    .topic-chip:disabled{opacity:0.5;cursor:not-allowed;}
+    .level-btns{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+    .level-btn{padding:10px 18px;border-radius:8px;border:2px solid var(--border);background:var(--surface);cursor:pointer;font-weight:700;font-size:0.84rem;transition:all 0.2s;flex:1;color:var(--text3);}
+    .level-btn.IM{border-color:#86efac;color:#166534;}
+    .level-btn.IH{border-color:#fde68a;color:#92400e;}
+    .level-btn.AL{border-color:#c4b5fd;color:#4c1d95;}
+    .level-btn.selected.IM{background:#86efac;}
+    .level-btn.selected.IH{background:#fde68a;}
+    .level-btn.selected.AL{background:#c4b5fd;}
+    .script-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
+    .script-actions button{flex:1;min-width:90px;padding:10px;border-radius:10px;font-size:0.84rem;font-weight:700;cursor:pointer;border:none;transition:all 0.2s;}
+    .btn-speak{background:#eff6ff;color:#1d4ed8;}
+    .btn-speak:hover{background:#dbeafe;}
+    .btn-fav{background:#fefce8;color:#854d0e;}
+    .btn-fav:hover{background:#fef9c3;}
+    .practice-step{display:none;}
+    .practice-step.active{display:block;}
+    .step-indicator{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:24px;}
+    .step-dot{width:32px;height:32px;border-radius:50%;border:2px solid var(--border);background:var(--surface);color:var(--text2);font-weight:700;font-size:0.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .step-dot.active{background:#4f46e5;border-color:#4f46e5;color:white;}
+    .step-dot.done{background:#10b981;border-color:#10b981;color:white;}
+    .step-line{width:40px;height:2px;background:var(--border);flex-shrink:0;}
+    .step-line.done{background:#10b981;}
+    .question-display{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:white;border-radius:16px;padding:24px;text-align:center;font-size:1.08rem;font-weight:700;line-height:1.8;margin-bottom:20px;min-height:90px;display:flex;align-items:center;justify-content:center;}
+    .timer-big{font-size:5rem;font-weight:900;color:var(--primary);text-align:center;padding:8px 0;font-variant-numeric:tabular-nums;line-height:1;}
+    .timer-big.warning{color:#ef4444;animation:pulse 1s infinite;}
+    .timer-label{text-align:center;font-size:0.9rem;color:var(--text2);margin-bottom:6px;font-weight:700;}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+    .record-btn{width:80px;height:80px;border-radius:50%;border:none;font-size:2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;transition:all 0.2s;}
+    .record-btn.idle{background:#fee2e2;color:#dc2626;box-shadow:0 4px 12px rgba(220,38,38,0.3);}
+    .record-btn.recording{background:#dc2626;color:white;animation:recordPulse 1.5s infinite;}
+    @keyframes recordPulse{0%,100%{box-shadow:0 0 0 8px rgba(220,38,38,0.2)}50%{box-shadow:0 0 0 18px rgba(220,38,38,0.05)}}
+    .transcript-box{background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:16px;min-height:80px;font-size:0.94rem;line-height:1.8;color:var(--text3);margin-bottom:16px;}
+    .btn-row{display:flex;gap:10px;flex-wrap:wrap;}
+    .btn-row>*{flex:1;min-width:110px;}
+    .api-notice{background:#fffbeb;border:1.5px solid #fde68a;border-radius:12px;padding:14px 18px;margin-bottom:20px;font-size:0.88rem;color:#92400e;display:none;}
+    .api-notice.show{display:block;}
+    /* 즐겨찾기 */
+    .fav-empty{text-align:center;padding:48px 20px;color:var(--text2);font-size:0.95rem;}
+    .fav-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:14px;position:relative;}
+    .fav-meta{font-size:0.78rem;color:var(--text2);margin-bottom:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+    .fav-badge{padding:2px 10px;border-radius:20px;font-weight:700;font-size:0.75rem;}
+    .fav-badge.IH{background:#fef9c3;color:#854d0e;}
+    .fav-badge.IM{background:#dcfce7;color:#166534;}
+    .fav-badge.AL{background:#ede9fe;color:#5b21b6;}
+    .fav-content{font-size:0.88rem;line-height:1.8;color:var(--text3);max-height:200px;overflow-y:auto;}
+    .fav-del{position:absolute;top:14px;right:14px;background:#fee2e2;color:#dc2626;border:none;border-radius:8px;padding:4px 10px;font-size:0.78rem;font-weight:700;cursor:pointer;}
+    /* 학습기록 */
+    .stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:20px;}
+    .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center;}
+    .stat-num{font-size:2rem;font-weight:900;color:var(--primary);}
+    .stat-label{font-size:0.78rem;color:var(--text2);margin-top:4px;font-weight:600;}
+    .history-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+    .h-topic{font-weight:700;font-size:0.92rem;color:var(--text);}
+    .h-meta{font-size:0.78rem;color:var(--text2);}
+    .history-empty{text-align:center;padding:48px 20px;color:var(--text2);font-size:0.95rem;}
+    /* 모의시험 */
+    .exam-step{display:none;}
+    .exam-step.active{display:block;}
+    .exam-progress{display:flex;gap:6px;justify-content:center;margin-bottom:20px;}
+    .exam-dot{width:36px;height:36px;border-radius:50%;border:2px solid var(--border);background:var(--surface);color:var(--text2);font-weight:800;font-size:0.85rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .exam-dot.active{background:#4f46e5;border-color:#4f46e5;color:white;}
+    .exam-dot.done{background:#10b981;border-color:#10b981;color:white;}
+    .exam-dot.fail{background:#ef4444;border-color:#ef4444;color:white;}
+    .exam-line{width:30px;height:2px;background:var(--border);flex-shrink:0;margin-top:17px;}
+    .exam-line.done{background:#10b981;}
+    .q-num-badge{display:inline-block;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:white;padding:4px 14px;border-radius:20px;font-size:0.8rem;font-weight:700;margin-bottom:12px;}
+    .expr-item{background:var(--bg);border-radius:10px;padding:14px 18px;border-left:4px solid var(--primary);margin-bottom:10px;font-size:0.92rem;line-height:1.8;color:var(--text3);}
+    @media(max-width:640px){
+      header{padding:12px 14px;}
+      .api-key-area input{width:130px;}
+      .page{padding:12px;}
+      .tabs{padding:0 2px;}
+      .tab-btn{padding:10px 7px;font-size:0.74rem;}
+      .timer-big{font-size:3.8rem;}
+      .question-display{font-size:0.9rem;padding:18px 14px;}
+      .record-btn{width:68px;height:68px;}
     }
   </style>
 </head>
 <body>
-
 <header>
   <div class="logo">
     <div class="logo-icon">🎙️</div>
     <div>
       <h1>OPIc 영어회화 트레이너</h1>
-      <span>스크립트 생성 · 실전 말하기 · 첨삭 · 표현 사전</span>
+      <span>스크립트 · 실전 · 첨삭 · 표현사전 · 모의시험 · 즐겨찾기 · 기록</span>
     </div>
   </div>
-  <div class="api-key-area">
-    <input type="password" id="apiKeyInput" placeholder="Gemini API Key 입력"/>
-    <button onclick="saveApiKey()">저장</button>
+  <div class="header-right">
+    <button class="dark-toggle" onclick="toggleDark()" title="다크모드">🌙</button>
+    <div class="api-key-area">
+      <input type="password" id="apiKeyInput" placeholder="Gemini API Key 입력"/>
+      <button onclick="saveApiKey()">저장</button>
+    </div>
   </div>
 </header>
 
 <div class="tabs">
-  <button class="tab-btn active" onclick="showPage('script',this)">📝 스크립트 생성</button>
+  <button class="tab-btn active" onclick="showPage('script',this)">📝 스크립트</button>
   <button class="tab-btn" onclick="showPage('practice',this)">🎙️ 실전 말하기</button>
-  <button class="tab-btn" onclick="showPage('feedback',this)">✏️ 내 답변 첨삭</button>
+  <button class="tab-btn" onclick="showPage('exam',this)">🏆 모의시험</button>
+  <button class="tab-btn" onclick="showPage('feedback',this)">✏️ 첨삭</button>
   <button class="tab-btn" onclick="showPage('expressions',this)">📚 표현 사전</button>
+  <button class="tab-btn" onclick="showPage('favorites',this)">⭐ 즐겨찾기</button>
+  <button class="tab-btn" onclick="showPage('history',this)">📊 학습 기록</button>
 </div>
 
 <!-- 1. 스크립트 생성 -->
@@ -115,9 +184,9 @@
   <div class="card">
     <h2>📝 오픽 주제별 스크립트 생성기</h2>
     <p class="desc">주제와 난이도를 선택하면 AI가 매번 새로운 오픽 스타일 답변 스크립트를 생성해줍니다.</p>
-    <p style="font-weight:700;margin-bottom:10px;font-size:0.9rem;">① 주제 선택</p>
+    <p style="font-weight:700;margin-bottom:10px;font-size:0.9rem;color:var(--text)">① 주제 선택</p>
     <div class="topic-grid" id="topicGrid"></div>
-    <p style="font-weight:700;margin-bottom:10px;font-size:0.9rem;">② 난이도 선택</p>
+    <p style="font-weight:700;margin-bottom:10px;font-size:0.9rem;color:var(--text)">② 난이도 선택</p>
     <div class="level-btns">
       <button class="level-btn IM" onclick="selectLevel('IM',this)">IM (중급)</button>
       <button class="level-btn IH selected" onclick="selectLevel('IH',this)">IH (중고급)</button>
@@ -142,7 +211,7 @@
       <h2>① 주제를 선택하세요</h2>
       <p class="desc">선택하면 AI가 해당 주제의 오픽 질문을 실시간으로 생성합니다.</p>
       <div class="topic-grid" id="practiceTopicGrid"></div>
-      <div id="questionLoading" style="display:none;text-align:center;padding:20px;color:#6b7280;">
+      <div id="questionLoading" style="display:none;text-align:center;padding:20px;color:var(--text2)">
         <span class="loading-dark"></span> AI가 질문을 생성하고 있어요...
       </div>
     </div>
@@ -167,9 +236,9 @@
       <div class="timer-big" id="practiceTimer">2:00</div>
       <div style="text-align:center;margin:16px 0 8px;">
         <button class="record-btn idle" id="recordBtn" onclick="toggleRecording()">🎤</button>
-        <div style="font-size:0.82rem;color:#6b7280;margin-top:4px;" id="recordStatus">버튼을 눌러 녹음 시작</div>
+        <div style="font-size:0.82rem;color:var(--text2);margin-top:4px;" id="recordStatus">버튼을 눌러 녹음 시작</div>
       </div>
-      <div style="font-weight:700;font-size:0.85rem;margin-bottom:8px;color:#374151;">📝 인식된 텍스트</div>
+      <div style="font-weight:700;font-size:0.88rem;margin-bottom:8px;color:var(--text)">📝 인식된 텍스트</div>
       <div class="transcript-box" id="transcriptBox">녹음하면 여기에 텍스트가 자동으로 표시됩니다...</div>
       <div class="btn-row">
         <button class="btn-secondary" onclick="speakQuestion2()">🔊 질문 듣기</button>
@@ -184,11 +253,11 @@
       <p class="desc">내 답변에 대한 오픽 전문 피드백입니다.</p>
       <div style="background:#f0f9ff;border:1.5px solid #bae6fd;border-radius:12px;padding:16px;margin-bottom:12px;">
         <div style="font-size:0.78rem;color:#0369a1;font-weight:700;margin-bottom:4px;">📌 질문</div>
-        <div style="font-size:0.92rem;color:#1e40af;font-weight:600;" id="evalQuestion"></div>
+        <div style="font-size:0.95rem;color:#1e40af;font-weight:600;line-height:1.7;" id="evalQuestion"></div>
       </div>
-      <div style="background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:12px;padding:16px;margin-bottom:12px;">
-        <div style="font-size:0.78rem;color:#6b7280;font-weight:700;margin-bottom:4px;">🗣️ 내 답변</div>
-        <div style="font-size:0.88rem;color:#374151;line-height:1.7;" id="evalTranscript"></div>
+      <div style="background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px;">
+        <div style="font-size:0.78rem;color:var(--text2);font-weight:700;margin-bottom:4px;">🗣️ 내 답변</div>
+        <div style="font-size:0.9rem;color:var(--text3);line-height:1.8;" id="evalTranscript"></div>
       </div>
       <div id="evalResult"></div>
       <div class="btn-row" style="margin-top:16px;">
@@ -199,15 +268,77 @@
   </div>
 </div>
 
-<!-- 3. 첨삭 -->
+<!-- 3. 모의시험 -->
+<div id="page-exam" class="page">
+  <div class="api-notice" id="notice-exam">⚠️ 상단에 Gemini API Key를 입력하고 저장해주세요.</div>
+  <div id="examstep0" class="exam-step active">
+    <div class="card">
+      <h2>🏆 오픽 모의시험 모드</h2>
+      <p class="desc">실제 오픽처럼 3문제가 연속으로 출제됩니다. 각 문제마다 2분 안에 답변하고 녹음하세요. 마지막에 AI가 종합 평가를 드립니다.</p>
+      <p style="font-weight:700;margin-bottom:10px;font-size:0.9rem;color:var(--text)">① 주제 선택 (3문제 모두 이 주제에서 출제)</p>
+      <div class="topic-grid" id="examTopicGrid"></div>
+      <p style="font-weight:700;margin-bottom:10px;font-size:0.9rem;color:var(--text)">② 목표 레벨</p>
+      <div class="level-btns">
+        <button class="level-btn IM" onclick="selectExamLevel('IM',this)">IM (중급)</button>
+        <button class="level-btn IH selected" onclick="selectExamLevel('IH',this)">IH (중고급)</button>
+        <button class="level-btn AL" onclick="selectExamLevel('AL',this)">AL (고급)</button>
+      </div>
+      <button class="btn-primary" id="examStartBtn" onclick="startExam()">🏆 모의시험 시작</button>
+    </div>
+  </div>
+  <div id="examstep1" class="exam-step">
+    <div class="exam-progress" id="examProgress"></div>
+    <div class="card">
+      <div id="examQNum" class="q-num-badge">문제 1 / 3</div>
+      <h2 id="examStepTitle">질문을 확인하세요</h2>
+      <p class="desc" id="examStepDesc">질문을 읽고 준비되면 시작 버튼을 누르세요.</p>
+      <div class="question-display" id="examQuestion">질문 로딩 중...</div>
+      <div class="btn-row">
+        <button class="btn-secondary" onclick="speakExamQuestion()">🔊 듣기</button>
+        <button class="btn-primary" style="flex:2" id="examReadyBtn" onclick="startExamAnswer()">▶ 답변 시작</button>
+      </div>
+    </div>
+  </div>
+  <div id="examstep2" class="exam-step">
+    <div class="exam-progress" id="examProgress2"></div>
+    <div class="card">
+      <div id="examQNum2" class="q-num-badge">문제 1 / 3</div>
+      <h2>녹음하세요</h2>
+      <div class="question-display" id="examQuestion2" style="font-size:0.92rem;min-height:60px;padding:16px;margin-bottom:16px;"></div>
+      <div class="timer-label">남은 시간</div>
+      <div class="timer-big" id="examTimer">2:00</div>
+      <div style="text-align:center;margin:16px 0 8px;">
+        <button class="record-btn idle" id="examRecordBtn" onclick="toggleExamRecording()">🎤</button>
+        <div style="font-size:0.82rem;color:var(--text2);margin-top:4px;" id="examRecordStatus">버튼을 눌러 녹음 시작</div>
+      </div>
+      <div style="font-weight:700;font-size:0.88rem;margin-bottom:8px;color:var(--text)">📝 인식된 텍스트</div>
+      <div class="transcript-box" id="examTranscriptBox">녹음하면 여기에 표시됩니다...</div>
+      <button class="btn-primary" id="examNextBtn" onclick="nextExamQuestion()" disabled>다음 문제 →</button>
+    </div>
+  </div>
+  <div id="examstep3" class="exam-step">
+    <div class="card">
+      <h2>🏆 모의시험 종합 평가</h2>
+      <p class="desc">3문제 답변에 대한 AI 종합 피드백입니다.</p>
+      <div id="examSummary"></div>
+      <div id="examFinalResult"></div>
+      <div class="btn-row" style="margin-top:16px;">
+        <button class="btn-secondary" onclick="resetExam()">🔄 다시 시험</button>
+        <button class="btn-primary" onclick="showPage('script',document.querySelectorAll('.tab-btn')[0])">📝 스크립트 보기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 4. 첨삭 -->
 <div id="page-feedback" class="page">
   <div class="api-notice" id="notice-feedback">⚠️ 상단에 Gemini API Key를 입력하고 저장해주세요.</div>
   <div class="card">
     <h2>✏️ 내 답변 첨삭 받기</h2>
-    <p class="desc">영어 답변을 붙여넣으면 AI가 문법, 표현, 오픽 스타일로 피드백을 드립니다.</p>
-    <p style="font-weight:700;margin-bottom:8px;font-size:0.9rem;">① 오픽 주제 (선택사항)</p>
-    <input type="text" id="feedbackTopic" placeholder="예: 자기소개, 여행 경험..." style="width:100%;padding:12px 16px;border-radius:10px;border:1.5px solid #e5e7eb;font-size:0.92rem;margin-bottom:16px;outline:none;font-family:inherit;"/>
-    <p style="font-weight:700;margin-bottom:8px;font-size:0.9rem;">② 내 답변 입력</p>
+    <p class="desc">영어 답변을 붙여넣으면 AI가 5단계 피드백을 드립니다.</p>
+    <p style="font-weight:700;margin-bottom:8px;font-size:0.9rem;color:var(--text)">① 오픽 주제 (선택사항)</p>
+    <input type="text" id="feedbackTopic" placeholder="예: 자기소개, 여행 경험..." style="width:100%;padding:12px 16px;border-radius:10px;border:1.5px solid var(--border);font-size:0.92rem;margin-bottom:16px;outline:none;font-family:inherit;background:var(--surface);color:var(--text);"/>
+    <p style="font-weight:700;margin-bottom:8px;font-size:0.9rem;color:var(--text)">② 내 답변 입력</p>
     <textarea id="myAnswer" placeholder="여기에 영어로 작성한 답변을 붙여넣으세요..." rows="6"></textarea>
     <div style="margin-top:16px;">
       <button class="btn-primary" id="feedbackBtn" onclick="getFeedback()">🔍 첨삭 받기</button>
@@ -216,7 +347,7 @@
   </div>
 </div>
 
-<!-- 4. 표현 사전 -->
+<!-- 5. 표현 사전 -->
 <div id="page-expressions" class="page">
   <div class="api-notice" id="notice-expr">⚠️ 상단에 Gemini API Key를 입력하고 저장해주세요.</div>
   <div class="card">
@@ -226,6 +357,29 @@
     <div id="exprResult"></div>
   </div>
 </div>
+
+<!-- 6. 즐겨찾기 -->
+<div id="page-favorites" class="page">
+  <div class="card">
+    <h2>⭐ 즐겨찾기한 스크립트</h2>
+    <p class="desc">스크립트 생성 후 ⭐ 버튼으로 저장한 내용이 여기에 모입니다.</p>
+    <div id="favList"></div>
+  </div>
+</div>
+
+<!-- 7. 학습 기록 -->
+<div id="page-history" class="page">
+  <div class="card">
+    <h2>📊 학습 통계</h2>
+    <div class="stats-grid" id="statsGrid"></div>
+  </div>
+  <div class="card">
+    <h2>🗓️ 최근 학습 기록</h2>
+    <p class="desc">실전 말하기, 모의시험, 첨삭 기록이 자동으로 저장됩니다.</p>
+    <div id="historyList"></div>
+  </div>
+</div>
+
 <script>
 const TOPICS = [
   "자기소개","집 묘사","여행 경험","좋아하는 영화","운동/스포츠",
@@ -233,9 +387,18 @@ const TOPICS = [
   "직장 생활","주말 활동","친구와의 추억","최근 본 공연","국내 여행"
 ];
 
+// ===== 다크모드 =====
+let isDark = localStorage.getItem("opic_dark") === "true";
+function applyTheme() {
+  document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+  document.querySelector(".dark-toggle").textContent = isDark ? "☀️" : "🌙";
+}
+function toggleDark() { isDark = !isDark; localStorage.setItem("opic_dark", isDark); applyTheme(); }
+applyTheme();
+
+// ===== API Key =====
 let apiKey = localStorage.getItem("gemini_api_key") || "";
 if (apiKey) document.getElementById("apiKeyInput").placeholder = "API Key 저장됨 ✓";
-
 function saveApiKey() {
   const v = document.getElementById("apiKeyInput").value.trim();
   if (!v) return;
@@ -246,19 +409,22 @@ function saveApiKey() {
   alert("✅ 저장됐습니다!");
   checkApiKey();
 }
-
 function checkApiKey() {
   document.querySelectorAll(".api-notice").forEach(n => n.classList.toggle("show", !apiKey));
 }
 
+// ===== 탭 =====
 function showPage(name, btn) {
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
   document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
   document.getElementById("page-" + name).classList.add("active");
   if (btn) btn.classList.add("active");
   checkApiKey();
+  if (name === "favorites") renderFavorites();
+  if (name === "history") renderHistory();
 }
 
+// ===== Gemini API =====
 async function callGemini(prompt) {
   if (!apiKey) throw new Error("API Key가 없습니다. 상단에 입력해주세요.");
   const res = await fetch(
@@ -274,12 +440,119 @@ async function callGemini(prompt) {
   return data.candidates[0].content.parts[0].text;
 }
 
+// ===== 피드백 섹션 파싱 =====
+function renderFeedbackSections(text) {
+  const sections = [
+    { key: "종합 평가", cls: "overall", icon: "📊" },
+    { key: "잘한 점", cls: "good", icon: "✅" },
+    { key: "개선할 점", cls: "improve", icon: "🔧" },
+    { key: "더 나은 표현", cls: "suggest", icon: "💡" },
+    { key: "수정된", cls: "revised", icon: "📝" },
+  ];
+  let html = "";
+  sections.forEach((s, i) => {
+    const pattern = new RegExp(s.key, "i");
+    const startIdx = text.search(pattern);
+    if (startIdx === -1) return;
+    let endIdx = text.length;
+    for (let j = i + 1; j < sections.length; j++) {
+      const ni = text.search(new RegExp("[0-9]+\\.\\s*" + sections[j].key + "|" + sections[j].key, "i"));
+      if (ni > startIdx) { endIdx = ni; break; }
+    }
+    const content = text.slice(startIdx, endIdx).trim().replace(new RegExp("^.*?" + s.key + "[^\\n]*\\n?", "i"), "").trim();
+    html += `<div class="result-section ${s.cls}"><h3>${s.icon} ${s.key}</h3>${escapeHtml(content)}</div>`;
+  });
+  return html || `<div class="result-section overall">${escapeHtml(text)}</div>`;
+}
+
+// ===== 학습 기록 =====
+function saveHistory(type, topic, detail) {
+  const history = JSON.parse(localStorage.getItem("opic_history") || "[]");
+  history.unshift({
+    type, topic, detail,
+    date: new Date().toLocaleString("ko-KR", { month:"numeric", day:"numeric", hour:"2-digit", minute:"2-digit" })
+  });
+  if (history.length > 50) history.pop();
+  localStorage.setItem("opic_history", JSON.stringify(history));
+}
+function renderHistory() {
+  const history = JSON.parse(localStorage.getItem("opic_history") || "[]");
+  const stats = {
+    total: history.length,
+    practice: history.filter(h => h.type === "실전").length,
+    exam: history.filter(h => h.type === "모의시험").length,
+    feedback: history.filter(h => h.type === "첨삭").length,
+    script: history.filter(h => h.type === "스크립트").length,
+  };
+  document.getElementById("statsGrid").innerHTML = `
+    <div class="stat-card"><div class="stat-num">${stats.total}</div><div class="stat-label">전체 학습 횟수</div></div>
+    <div class="stat-card"><div class="stat-num">${stats.practice}</div><div class="stat-label">🎙️ 실전 말하기</div></div>
+    <div class="stat-card"><div class="stat-num">${stats.exam}</div><div class="stat-label">🏆 모의시험</div></div>
+    <div class="stat-card"><div class="stat-num">${stats.feedback}</div><div class="stat-label">✏️ 첨삭</div></div>
+    <div class="stat-card"><div class="stat-num">${stats.script}</div><div class="stat-label">📝 스크립트</div></div>
+  `;
+  const list = document.getElementById("historyList");
+  if (!history.length) {
+    list.innerHTML = '<div class="history-empty">📭 아직 학습 기록이 없어요!</div>';
+    return;
+  }
+  const typeIcon = { "실전":"🎙️","모의시험":"🏆","첨삭":"✏️","스크립트":"📝" };
+  list.innerHTML = history.map(h => `
+    <div class="history-item">
+      <div>
+        <div class="h-topic">${typeIcon[h.type]||"📌"} ${h.type} — ${h.topic}</div>
+        <div class="h-meta">${h.detail||""}</div>
+      </div>
+      <div class="h-meta">${h.date}</div>
+    </div>
+  `).join("");
+}
+
+// ===== 즐겨찾기 =====
+function saveFavorite(topic, level, content) {
+  const favs = JSON.parse(localStorage.getItem("opic_favorites") || "[]");
+  favs.unshift({ topic, level, content, date: new Date().toLocaleString("ko-KR",{month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"}) });
+  localStorage.setItem("opic_favorites", JSON.stringify(favs));
+  alert("⭐ 즐겨찾기에 저장됐습니다!");
+}
+function deleteFavorite(idx) {
+  const favs = JSON.parse(localStorage.getItem("opic_favorites") || "[]");
+  favs.splice(idx, 1);
+  localStorage.setItem("opic_favorites", JSON.stringify(favs));
+  renderFavorites();
+}
+function renderFavorites() {
+  const favs = JSON.parse(localStorage.getItem("opic_favorites") || "[]");
+  const list = document.getElementById("favList");
+  if (!favs.length) {
+    list.innerHTML = '<div class="fav-empty">⭐ 아직 즐겨찾기한 스크립트가 없어요.<br>스크립트 생성 후 ⭐ 버튼을 눌러보세요!</div>';
+    return;
+  }
+  list.innerHTML = favs.map((f, i) => `
+    <div class="fav-card">
+      <button class="fav-del" onclick="deleteFavorite(${i})">삭제</button>
+      <div class="fav-meta">
+        <span class="fav-badge ${f.level}">${f.level}</span>
+        <strong>${f.topic}</strong>
+        <span>${f.date}</span>
+      </div>
+      <div class="fav-content">${escapeHtml(f.content)}</div>
+      <div style="margin-top:10px;">
+        <button class="btn-speak" style="padding:8px 14px;border-radius:8px;font-size:0.82rem;font-weight:700;cursor:pointer;border:none;" onclick="speak(favs_${i})">🔊 듣기</button>
+      </div>
+    </div>
+  `).join("");
+  favs.forEach((f, i) => { window[`favs_${i}`] = f.content; });
+}
+
 // ===== 1. 스크립트 생성 =====
 let selectedTopic = "";
 let selectedLevel = "IH";
+let lastScriptText = "";
 
 function buildTopicGrid(id, onSelect) {
   const grid = document.getElementById(id);
+  if (!grid) return;
   TOPICS.forEach(t => {
     const btn = document.createElement("button");
     btn.className = "topic-chip";
@@ -322,9 +595,17 @@ Level: ${levelDesc[selectedLevel]}
 - Natural spoken English (NOT formal/written style), 8-12 sentences
 - Add Korean translation in parentheses after each paragraph
 - Sound like a real person speaking with specific personal details
-- Generate a fresh unique script each time (vary the content, angle, examples)`
+- Generate a fresh unique script each time`
     );
-    result.innerHTML = `<div class="result-box">${escapeHtml(text)}</div>`;
+    lastScriptText = text;
+    saveHistory("스크립트", selectedTopic, `${selectedLevel} 레벨`);
+    result.innerHTML = `
+      <div class="result-box script">${escapeHtml(text)}</div>
+      <div class="script-actions">
+        <button class="btn-speak" onclick="speak(lastScriptText)">🔊 읽어주기</button>
+        <button class="btn-secondary" onclick="window.speechSynthesis.cancel()" style="flex:1;min-width:90px;padding:10px;border-radius:10px;font-size:0.84rem;font-weight:700;cursor:pointer;">⏹ 정지</button>
+        <button class="btn-fav" onclick="saveFavorite('${selectedTopic}','${selectedLevel}',lastScriptText)">⭐ 즐겨찾기</button>
+      </div>`;
   } catch(e) {
     result.innerHTML = `<div class="result-box error">❌ 오류: ${e.message}</div>`;
   }
@@ -382,15 +663,13 @@ function speakQuestion2() { speak(currentQuestion); }
 
 function speak(text) {
   window.speechSynthesis.cancel();
+  if (!text) return;
   const u = new SpeechSynthesisUtterance(text);
   u.lang = "en-US"; u.rate = 0.88;
   window.speechSynthesis.speak(u);
 }
 
-function goToStep3() {
-  goToStep(3);
-  startPracticeTimer();
-}
+function goToStep3() { goToStep(3); startPracticeTimer(); }
 
 function startPracticeTimer() {
   clearInterval(practiceTimer);
@@ -418,12 +697,13 @@ function updateTimerDisplay() {
   document.getElementById("practiceTimer").textContent = `${m}:${s.toString().padStart(2,"0")}`;
 }
 
-function toggleRecording() {
-  if (!isRecording) startRecognition();
-  else stopRecognition();
-}
+function toggleRecording() { if (!isRecording) startRecognition(); else stopRecognition(); }
 
-function startRecognition() {
+function startRecognition(transcriptId, statusId, recordBtnId, evalBtnId) {
+  transcriptId = transcriptId || "transcriptBox";
+  statusId = statusId || "recordStatus";
+  recordBtnId = recordBtnId || "recordBtn";
+  evalBtnId = evalBtnId || "evalBtn";
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SR) { alert("Chrome 또는 Android Chrome 브라우저를 사용해주세요."); return; }
   recognition = new SR();
@@ -432,9 +712,9 @@ function startRecognition() {
   recognition.interimResults = true;
   recognition.onstart = () => {
     isRecording = true;
-    document.getElementById("recordBtn").className = "record-btn recording";
-    document.getElementById("recordBtn").textContent = "⏹";
-    document.getElementById("recordStatus").textContent = "🔴 녹음 중... 다시 누르면 정지";
+    document.getElementById(recordBtnId).className = "record-btn recording";
+    document.getElementById(recordBtnId).textContent = "⏹";
+    document.getElementById(statusId).textContent = "🔴 녹음 중... 다시 누르면 정지";
   };
   recognition.onresult = (e) => {
     let interim = "", final = "";
@@ -443,23 +723,25 @@ function startRecognition() {
       else interim += e.results[i][0].transcript;
     }
     fullTranscript += final;
-    document.getElementById("transcriptBox").textContent = fullTranscript + interim;
-    if (fullTranscript.trim()) document.getElementById("evalBtn").disabled = false;
+    document.getElementById(transcriptId).textContent = fullTranscript + interim;
+    if (fullTranscript.trim() && evalBtnId) document.getElementById(evalBtnId).disabled = false;
   };
   recognition.onerror = (e) => {
     if (e.error === "not-allowed") alert("마이크 권한을 허용해주세요!");
-    stopRecognition();
+    stopRecognition(recordBtnId, statusId);
   };
   recognition.onend = () => { if (isRecording) recognition.start(); };
   recognition.start();
 }
 
-function stopRecognition() {
+function stopRecognition(recordBtnId, statusId) {
+  recordBtnId = recordBtnId || "recordBtn";
+  statusId = statusId || "recordStatus";
   isRecording = false;
   if (recognition) { recognition.onend = null; recognition.stop(); }
-  document.getElementById("recordBtn").className = "record-btn idle";
-  document.getElementById("recordBtn").textContent = "🎤";
-  document.getElementById("recordStatus").textContent = "녹음 정지됨. 다시 누르면 이어서 녹음";
+  document.getElementById(recordBtnId).className = "record-btn idle";
+  document.getElementById(recordBtnId).textContent = "🎤";
+  document.getElementById(statusId).textContent = "녹음 정지됨. 다시 누르면 이어서 녹음";
 }
 
 async function goToStep4() {
@@ -470,32 +752,26 @@ async function goToStep4() {
   document.getElementById("evalQuestion").textContent = currentQuestion;
   document.getElementById("evalTranscript").textContent = fullTranscript.trim();
   const result = document.getElementById("evalResult");
-  result.innerHTML = '<div style="text-align:center;padding:24px;color:#6b7280;"><span class="loading-dark"></span> AI가 평가 중이에요...</div>';
+  result.innerHTML = '<div style="text-align:center;padding:24px;color:var(--text2)"><span class="loading-dark"></span> AI가 평가 중이에요...</div>';
   try {
     const text = await callGemini(
       `You are an OPIc English speaking coach. Evaluate this student's spoken answer and provide detailed feedback in Korean.
-
 Question: "${currentQuestion}"
 Student's Answer: "${fullTranscript.trim()}"
-
-Provide feedback with this structure:
-
+Provide feedback with EXACTLY this structure:
 1. 📊 종합 평가
-- 예상 오픽 레벨 (IM1~AL)과 전반적 평가 2-3문장
-
+예상 오픽 레벨과 전반적 평가 2-3문장
 2. ✅ 잘한 점
-- 좋은 표현이나 문장 구조 (구체적으로 인용해서)
-
+좋은 표현이나 문장 구조 (구체적으로 인용)
 3. 🔧 개선할 점
-- 문법 오류, 어색한 표현, 부자연스러운 부분 (구체적으로)
-
+문법 오류, 어색한 표현 (구체적으로)
 4. 💡 더 나은 표현 제안
-- 고급 표현으로 바꿀 수 있는 문장 3개 이상 (원문 → 개선안 형식)
-
+원문 → 개선안 형식으로 3개 이상
 5. 📝 수정된 전체 답변
-- IH~AL 수준으로 전체 답변을 다시 작성`
+IH~AL 수준으로 전체 재작성`
     );
-    result.innerHTML = `<div class="result-box feedback">${escapeHtml(text)}</div>`;
+    saveHistory("실전", currentPracticeTopic, currentQuestion.slice(0,40) + "...");
+    result.innerHTML = renderFeedbackSections(text);
   } catch(e) {
     result.innerHTML = `<div class="result-box error">❌ 오류: ${e.message}</div>`;
   }
@@ -505,8 +781,7 @@ function goToStep(n) {
   document.querySelectorAll(".practice-step").forEach(s => s.classList.remove("active"));
   document.getElementById("pstep" + n).classList.add("active");
   for (let i = 1; i <= 4; i++) {
-    const dot = document.getElementById("sdot" + i);
-dot.className = "step-dot" + (i < n ? " done" : i === n ? " active" : "");
+    document.getElementById("sdot" + i).className = "step-dot" + (i < n ? " done" : i === n ? " active" : "");
     if (i < 4) {
       const line = document.getElementById("sline" + i);
       if (line) line.className = "step-line" + (i < n ? " done" : "");
@@ -527,8 +802,241 @@ function resetPractice() {
   document.querySelectorAll("#practiceTopicGrid .topic-chip").forEach(c => c.classList.remove("selected"));
   goToStep(1);
 }
+  // ===== 3. 모의시험 =====
+let examTopic = "";
+let examLevel = "IH";
+let examQuestions = [];
+let examAnswers = [];
+let examCurrentQ = 0;
+let examTimer = null;
+let examSeconds = 120;
+let examRecording = false;
+let examRecognition = null;
+let examTranscript = "";
 
-// ===== 3. 첨삭 =====
+buildTopicGrid("examTopicGrid", t => {
+  examTopic = t;
+  document.querySelectorAll("#examTopicGrid .topic-chip").forEach(c => {
+    if (c.textContent === t) c.classList.add("selected");
+  });
+});
+
+function selectExamLevel(level, btn) {
+  document.querySelectorAll("#examstep0 .level-btn").forEach(b => b.classList.remove("selected"));
+  btn.classList.add("selected");
+  examLevel = level;
+}
+
+function renderExamProgress(currentStep) {
+  const html = [1,2,3].map((n, i) => {
+    let cls = "exam-dot";
+    if (n < currentStep) cls += " done";
+    else if (n === currentStep) cls += " active";
+    const line = i < 2 ? `<div class="exam-line${n < currentStep ? " done" : ""}"></div>` : "";
+    return `<div class="${cls}">${n}</div>${line}`;
+  }).join("");
+  document.querySelectorAll(".exam-progress").forEach(el => el.innerHTML = html);
+}
+
+async function startExam() {
+  if (!apiKey) { checkApiKey(); return; }
+  if (!examTopic) { alert("주제를 선택해주세요!"); return; }
+  const btn = document.getElementById("examStartBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading"></span>문제 생성 중...';
+  try {
+    const text = await callGemini(
+      `You are an OPIc English speaking test examiner. Generate exactly 3 different OPIc speaking questions about: "${examTopic}"
+- All questions must be in English
+- Each question should be different in angle/focus
+- Questions should match ${examLevel} level difficulty
+- Output ONLY the 3 questions, one per line, numbered 1. 2. 3.
+- No extra text or explanations`
+    );
+    examQuestions = text.trim().split("\n")
+      .filter(l => l.trim())
+      .map(l => l.replace(/^[0-9]+[\.\)]\s*/, "").trim())
+      .slice(0, 3);
+    if (examQuestions.length < 3) throw new Error("질문 생성 실패. 다시 시도해주세요.");
+    examAnswers = [];
+    examCurrentQ = 0;
+    examTranscript = "";
+    showExamStep(1);
+    loadExamQuestion();
+  } catch(e) {
+    alert("오류: " + e.message);
+  }
+  btn.disabled = false;
+  btn.innerHTML = "🏆 모의시험 시작";
+}
+
+function showExamStep(n) {
+  document.querySelectorAll(".exam-step").forEach(s => s.classList.remove("active"));
+  document.getElementById("examstep" + n).classList.add("active");
+}
+
+function loadExamQuestion() {
+  const qNum = examCurrentQ + 1;
+  renderExamProgress(qNum);
+  document.querySelectorAll("[id^='examQNum']").forEach(el => el.textContent = `문제 ${qNum} / 3`);
+  document.getElementById("examQuestion").textContent = "❓ " + examQuestions[examCurrentQ];
+  document.getElementById("examQuestion2").textContent = "❓ " + examQuestions[examCurrentQ];
+  document.getElementById("examNextBtn").disabled = true;
+  document.getElementById("examTranscriptBox").textContent = "녹음하면 여기에 표시됩니다...";
+  examTranscript = "";
+}
+
+function speakExamQuestion() { speak(examQuestions[examCurrentQ]); }
+
+function startExamAnswer() {
+  showExamStep(2);
+  startExamTimer();
+}
+
+function startExamTimer() {
+  clearInterval(examTimer);
+  examSeconds = 120;
+  updateExamTimerDisplay();
+  document.getElementById("examTimer").className = "timer-big";
+  examTimer = setInterval(() => {
+    examSeconds--;
+    updateExamTimerDisplay();
+    if (examSeconds <= 20) document.getElementById("examTimer").classList.add("warning");
+    if (examSeconds <= 0) {
+      clearInterval(examTimer);
+      if (examRecording) stopExamRecognition();
+      document.getElementById("examTimer").textContent = "종료!";
+      document.getElementById("examNextBtn").disabled = false;
+      speak("Time is up!");
+    }
+  }, 1000);
+}
+
+function updateExamTimerDisplay() {
+  const m = Math.floor(examSeconds / 60);
+  const s = examSeconds % 60;
+  document.getElementById("examTimer").textContent = `${m}:${s.toString().padStart(2,"0")}`;
+}
+
+function toggleExamRecording() {
+  if (!examRecording) startExamRecognition();
+  else stopExamRecognition();
+}
+
+function startExamRecognition() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { alert("Chrome 또는 Android Chrome 브라우저를 사용해주세요."); return; }
+  examRecognition = new SR();
+  examRecognition.lang = "en-US";
+  examRecognition.continuous = true;
+  examRecognition.interimResults = true;
+  examRecognition.onstart = () => {
+    examRecording = true;
+    document.getElementById("examRecordBtn").className = "record-btn recording";
+    document.getElementById("examRecordBtn").textContent = "⏹";
+    document.getElementById("examRecordStatus").textContent = "🔴 녹음 중... 다시 누르면 정지";
+  };
+  examRecognition.onresult = (e) => {
+    let interim = "", final = "";
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      if (e.results[i].isFinal) final += e.results[i][0].transcript + " ";
+      else interim += e.results[i][0].transcript;
+    }
+    examTranscript += final;
+    document.getElementById("examTranscriptBox").textContent = examTranscript + interim;
+    if (examTranscript.trim()) document.getElementById("examNextBtn").disabled = false;
+  };
+  examRecognition.onerror = (e) => {
+    if (e.error === "not-allowed") alert("마이크 권한을 허용해주세요!");
+    stopExamRecognition();
+  };
+  examRecognition.onend = () => { if (examRecording) examRecognition.start(); };
+  examRecognition.start();
+}
+
+function stopExamRecognition() {
+  examRecording = false;
+  if (examRecognition) { examRecognition.onend = null; examRecognition.stop(); }
+  document.getElementById("examRecordBtn").className = "record-btn idle";
+  document.getElementById("examRecordBtn").textContent = "🎤";
+  document.getElementById("examRecordStatus").textContent = "녹음 정지됨. 다시 누르면 이어서 녹음";
+}
+
+function nextExamQuestion() {
+  clearInterval(examTimer);
+  if (examRecording) stopExamRecognition();
+  examAnswers.push({ q: examQuestions[examCurrentQ], a: examTranscript.trim() || "(답변 없음)" });
+  examCurrentQ++;
+  examTranscript = "";
+  if (examCurrentQ < 3) {
+    loadExamQuestion();
+    showExamStep(1);
+  } else {
+    showExamFinalResult();
+  }
+}
+
+async function showExamFinalResult() {
+  showExamStep(3);
+  renderExamProgress(4);
+  const summary = document.getElementById("examSummary");
+  summary.innerHTML = examAnswers.map((item, i) => `
+    <div style="background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:12px;">
+      <div style="font-size:0.78rem;color:#0369a1;font-weight:700;margin-bottom:4px;">📌 문제 ${i+1}</div>
+      <div style="font-size:0.92rem;color:#1e40af;font-weight:600;margin-bottom:8px;">${escapeHtml(item.q)}</div>
+      <div style="font-size:0.78rem;color:var(--text2);font-weight:700;margin-bottom:4px;">🗣️ 내 답변</div>
+      <div style="font-size:0.88rem;color:var(--text3);line-height:1.7;">${escapeHtml(item.a)}</div>
+    </div>
+  `).join("");
+  const result = document.getElementById("examFinalResult");
+  result.innerHTML = '<div style="text-align:center;padding:24px;color:var(--text2)"><span class="loading-dark"></span> AI가 종합 평가 중이에요...</div>';
+  const qaText = examAnswers.map((item, i) => `Q${i+1}: ${item.q}\nA${i+1}: ${item.a}`).join("\n\n");
+  try {
+    const text = await callGemini(
+      `You are an OPIc English speaking coach. Evaluate this student's 3 OPIc answers comprehensively and provide feedback in Korean.
+Topic: ${examTopic}
+Target Level: ${examLevel}
+
+${qaText}
+
+Provide comprehensive feedback:
+1. 📊 종합 평가
+전체적인 오픽 예상 레벨과 3문제 전반적 평가
+
+2. ✅ 가장 잘한 점
+3개의 답변에서 공통적으로 잘된 부분
+
+3. 🔧 핵심 개선 포인트
+반복되는 오류나 가장 중요한 개선점 3가지
+
+4. 💡 레벨업을 위한 핵심 표현
+${examLevel} 이상을 위해 꼭 써야 할 표현 5가지 (예문 포함)
+
+5. 📝 학습 추천
+다음 연습을 위한 구체적인 조언`
+    );
+    saveHistory("모의시험", examTopic, `${examLevel} 레벨 3문제 완료`);
+    result.innerHTML = renderFeedbackSections(text);
+  } catch(e) {
+    result.innerHTML = `<div class="result-box error">❌ 오류: ${e.message}</div>`;
+  }
+}
+
+function resetExam() {
+  clearInterval(examTimer);
+  if (examRecording) stopExamRecognition();
+  examQuestions = [];
+  examAnswers = [];
+  examCurrentQ = 0;
+  examTranscript = "";
+  examTopic = "";
+  document.querySelectorAll("#examTopicGrid .topic-chip").forEach(c => c.classList.remove("selected"));
+  document.getElementById("examStartBtn").disabled = false;
+  document.getElementById("examStartBtn").innerHTML = "🏆 모의시험 시작";
+  showExamStep(0);
+}
+
+// ===== 4. 첨삭 =====
 async function getFeedback() {
   if (!apiKey) { checkApiKey(); return; }
   const answer = document.getElementById("myAnswer").value.trim();
@@ -544,56 +1052,20 @@ async function getFeedback() {
       `You are an OPIc English speaking coach. Give detailed feedback on this student's answer in Korean.
 ${topic ? "Topic: " + topic : ""}
 Student's answer: "${answer}"
-
-Structure:
-1. 📊 전체 평가 - 예상 오픽 레벨 및 전반 평가
-2. ✅ 잘한 점 - 좋은 표현 구체적으로
-3. 🔧 개선할 점 - 문법 오류, 어색한 표현
-4. 💡 더 나은 표현 제안 - 원문 → 개선안 3개 이상
-5. 📝 수정된 전체 답변 - IH~AL 수준으로 재작성`
+Provide feedback with EXACTLY this structure:
+1. 📊 종합 평가
+예상 오픽 레벨 및 전반 평가
+2. ✅ 잘한 점
+좋은 표현 구체적으로
+3. 🔧 개선할 점
+문법 오류, 어색한 표현
+4. 💡 더 나은 표현 제안
+원문 → 개선안 3개 이상
+5. 📝 수정된 전체 답변
+IH~AL 수준으로 재작성`
     );
-    result.innerHTML = `<div class="result-box feedback">${escapeHtml(text)}</div>`;
+    saveHistory("첨삭", topic || "자유 주제", answer.slice(0,30) + "...");
+    result.innerHTML = renderFeedbackSections(text);
   } catch(e) {
     result.innerHTML = `<div class="result-box error">❌ 오류: ${e.message}</div>`;
   }
-  btn.disabled = false;
-  btn.innerHTML = "🔍 첨삭 받기";
-}
-
-// ===== 4. 표현 사전 =====
-buildTopicGrid("exprTopicGrid", async (t) => {
-  if (!apiKey) { checkApiKey(); return; }
-  const result = document.getElementById("exprResult");
-  result.innerHTML = '<div style="text-align:center;padding:24px;color:#6b7280;"><span class="loading-dark"></span> AI가 표현을 생성하고 있어요...</div>';
-  try {
-    const text = await callGemini(
-      `You are an OPIc English speaking coach. Generate useful English expressions for OPIc speaking topic: "${t}"
-
-Provide 5-7 key expressions with the following format for each:
-[영어 표현]
-한국어 의미: (Korean meaning)
-예문: (Example sentence using this expression)
-
-Make the expressions natural, spoken-style, and useful for IH~AL level OPIc responses.
-Include transition phrases, topic-specific vocabulary, and natural connectors.`
-    );
-    result.innerHTML = `<div style="margin-top:8px;"><div style="font-size:0.82rem;color:#4f46e5;font-weight:700;margin-bottom:12px;">✨ "${t}" 주제 핵심 표현</div><div class="expr-item">${escapeHtml(text)}</div></div>`;
-  } catch(e) {
-    result.innerHTML = `<div class="result-box error">❌ 오류: ${e.message}</div>`;
-  }
-});
-
-// ===== 유틸 =====
-function escapeHtml(text) {
-  return text
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/\n/g,"<br/>");
-}
-
-checkApiKey();
-</script>
-</body>
-</html>
-  
